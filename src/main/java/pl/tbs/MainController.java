@@ -30,6 +30,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import org.controlsfx.control.tableview2.FilteredTableView;
+
 public class MainController {
     @FXML
     private AnchorPane anchorPane;
@@ -39,59 +41,13 @@ public class MainController {
     private TextField filePathField;
 
     @FXML
-    private ToggleButton ytPreNur;
-    @FXML
-    private ToggleButton ytNur;
-    @FXML
-    private ToggleButton ytY1;
-    @FXML
-    private ToggleButton ytY2;
-    @FXML
-    private ToggleButton ytY3;
-    @FXML
-    private ToggleButton ytY4;
-    @FXML
-    private ToggleButton ytY5;
-    @FXML
-    private ToggleButton ytY6;
-    @FXML
-    private ToggleButton ytY7;
-    @FXML
-    private ToggleButton ytY8;
-    @FXML
-    private ToggleButton ytY9;
-    @FXML
-    private ToggleButton ytY10;
-    @FXML
-    private ToggleButton ytY11;
-    @FXML
-    private ToggleButton ytY12;
-    @FXML
-    private ToggleButton ytY13;
-    @FXML
-    private SegmentedButton yearSelectionButtons;
-
-    @FXML
     private Button loadFileButton;
     @FXML
     private Button unloadFileButton;
+    @FXML private FilteredTableView<Student> studentTableView;
+    @FXML private TableViewController studentTableController;
 
-    @FXML
-    private TableView<Student> studentTableView;
-    @FXML
-    private TableColumn<Student, String> yearColumn;
-    @FXML
-    private TableColumn<Student, String> formColumn;
-    @FXML
-    private TableColumn<Student, String> upnColumn;
-    @FXML
-    private TableColumn<Student, String> fNameColumn;
-    @FXML
-    private TableColumn<Student, String> lNameColumn;
-    @FXML
-    private TableColumn<Student, String> emailColumn;
-    @FXML
-    private TableColumn<Student, String> passwordColumn;
+    
 
     @FXML
     private void tableClickEvent(MouseEvent event) {
@@ -153,23 +109,7 @@ public class MainController {
 
     @FXML
     protected void onFileSelectButtonClick() {
-        Stage stage = (Stage) anchorPane.getScene().getWindow();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Spreadsheet", "*.xlsx"));
-        fileChooser.setInitialDirectory(new File("C:\\"));
-        selectedFile = fileChooser.showOpenDialog(stage);
 
-        if (selectedFile != null && selectedFile.isFile()) {
-            if (selectedFile.canWrite()) {
-                statusMsg.setText("Loaded file: " + selectedFile.getName());
-                filePathField.setText(selectedFile.getAbsolutePath());
-            } else {
-                filePathField.setText("");
-                statusMsg.setText("You do not have permissions to this file");
-            }
-        } else {
-            filePathField.setText("");
-            statusMsg.setText("File does not exists");
-        }
     }
 
     @FXML
