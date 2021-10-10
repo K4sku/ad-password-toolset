@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TableView?>
 <?import org.controlsfx.control.tableview2.FilteredTableColumn?>
 <?import org.controlsfx.control.tableview2.FilteredTableView?>
 
-<FilteredTableView fx:id="tableView" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.tableViewController">
+<FilteredTableView fx:id="tableView" onMouseClicked="#tableClickEvent" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.TableViewController">
    <columns>
               <FilteredTableColumn fx:id="yearColumn" prefWidth="75.0" text="Year" />
               <FilteredTableColumn fx:id="formColumn" prefWidth="75.0" text="Class" />
@@ -14,6 +15,9 @@
               <FilteredTableColumn fx:id="passwordColumn" prefWidth="100.0" sortable="false" text="Password" />
    </columns>
    <padding>
-      <Insets bottom="2.5" left="7.0" right="7.0" top="2.5" />
+
    </padding>
+   <columnResizePolicy>
+      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+   </columnResizePolicy>
 </FilteredTableView>

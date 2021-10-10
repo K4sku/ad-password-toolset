@@ -47,7 +47,7 @@ public class Student {
     }
 
     public final void setForm(String form) {
-        this.formProperty().set(form);;
+        this.formProperty().set(form);
     }
 
     public final StringProperty upnProperty(){

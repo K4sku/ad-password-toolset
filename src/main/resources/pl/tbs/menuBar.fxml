@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+
+<MenuBar fx:id="menuBar" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.MenuBarController">
+  <menus>
+    <Menu mnemonicParsing="false" text="File">
+      <items>
+        <MenuItem fx:id="openFileMenuItem" mnemonicParsing="false" onAction="#onOpenFileMenuItem" text="Open" />
+        <MenuItem fx:id="reloadFileMenuItem" disable="true" mnemonicParsing="false" onAction="#onReloadFileMenuItem" text="Reload" />
+        <MenuItem fx:id="closeFileMenuItem" disable="true" mnemonicParsing="false" onAction="#onCloseFileMenuItem" text="Close" />
+        <SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem fx:id="quitFileMenuItem" mnemonicParsing="false" onAction="#onQuitFileMenuItem" text="Quit" />
+      </items>
+    </Menu>
+    <Menu fx:id="exportMenu" disable="true" mnemonicParsing="false" text="Export">
+      <items>
+        <MenuItem mnemonicParsing="false" text="To PDF" />
+        <MenuItem mnemonicParsing="false" text="To Excel" />
+      </items>
+    </Menu>
+      <Menu fx:id="toolsMenu" disable="true" mnemonicParsing="false" text="Tools">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Import from iSAMS" />
+          <MenuItem mnemonicParsing="false" text="Import from AD" />
+        </items>
+      </Menu>
+      <Menu fx:id="addStudentMenu" disable="true" mnemonicParsing="false" onAction="#onAddStudentMenu" text="Add student" />
+    <Menu mnemonicParsing="false" text="Help">
+      <items>
+        <MenuItem mnemonicParsing="false" text="About" />
+      </items>
+    </Menu>
+  </menus>
+</MenuBar>

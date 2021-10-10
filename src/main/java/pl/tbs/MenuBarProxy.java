@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.controlsfx.control.NotificationPane;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.control.action.ActionGroup;
 import org.controlsfx.control.action.ActionMap;
@@ -24,13 +23,11 @@ public class MenuBarProxy {
     FileChooser fileChooser;
     
     Stage stage;
-    NotificationPane notificationPane;
     File selectedFile;
     
-    public MenuBarProxy(Stage stage, NotificationPane notificationPane) {
+    public MenuBarProxy(Stage stage) {
         ActionMap.register(this);
         this.stage = stage;
-        this.notificationPane = notificationPane;
         actions = Arrays.asList(
             new ActionGroup("File", actions("openFileAction", "closeFileAction", "reloadFileAction"))
         );
@@ -46,14 +43,13 @@ public class MenuBarProxy {
         selectedFile = fileChooser.showOpenDialog(stage);
         if (selectedFile != null && selectedFile.isFile()) {
             if (selectedFile.canWrite()) {
-                notificationPane.show();
-                notificationPane.setText("File opened:" + selectedFile.getName());
+                // notificationPane.setText("File opened:" + selectedFile.getName());
                 return selectedFile;
             } else {
-                notificationPane.setText("You do not have permissions to this file");
+                // notificationPane.setText("You do not have permissions to this file");
             }
         } else {
-            notificationPane.setText("File does not exists");
+            // notificationPane.setText("File does not exists");
         }
         return null;
     }

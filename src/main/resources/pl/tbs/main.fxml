@@ -4,11 +4,12 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.MainController">
+<VBox minHeight="640.0" minWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.MainController">
    <children>
-        <fx:include fx:id="filterBar" source="filterBar.fxml" />
-        <fx:include fx:id="tableView" source="tableView.fxml" />
-        <fx:include fx:id="actionsBar" source="actionsBar.fxml" />
+      <fx:include fx:id="menuBar" source="menuBar.fxml" />
+      <fx:include fx:id="filterBar" source="filterBar.fxml" />
+      <fx:include fx:id="tableView" source="tableView.fxml" />
+      <fx:include fx:id="actionsBar" source="actionsBar.fxml" />
       <Separator prefWidth="200.0">
          <VBox.margin>
             <Insets bottom="5.0" top="5.0" />
