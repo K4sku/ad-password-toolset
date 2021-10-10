@@ -1,4 +1,4 @@
-package pl.tbs;
+package pl.tbs.model;
 
 public enum LogLevel {
     INFO, 

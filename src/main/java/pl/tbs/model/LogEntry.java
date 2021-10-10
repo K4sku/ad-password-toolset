@@ -1,4 +1,4 @@
-package pl.tbs;
+package pl.tbs.model;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

@@ -1,4 +1,4 @@
-package pl.tbs;
+package pl.tbs.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import pl.tbs.model.LogEntry;
+import pl.tbs.model.LogLevel;
 
 public class MenuBarController {
 
@@ -33,7 +35,6 @@ public class MenuBarController {
     private TableViewController tableViewC;
     private FileChooser fileChooser;
     private File selectedFile;
-    private boolean isFileOpened = false;
 
     public void initialize(){
         fileChooser = new FileChooser();

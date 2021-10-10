@@ -1,4 +1,4 @@
-package pl.tbs;
+package pl.tbs.controller;
 
 import javafx.fxml.FXML;
 

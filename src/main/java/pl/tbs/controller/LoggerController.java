@@ -1,10 +1,11 @@
-package pl.tbs;
+package pl.tbs.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import pl.tbs.model.LogEntry;
 
 public class LoggerController {
     @FXML private VBox logger;

@@ -1,4 +1,4 @@
-package pl.tbs;
+package pl.tbs.model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

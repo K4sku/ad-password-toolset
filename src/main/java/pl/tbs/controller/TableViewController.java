@@ -1,4 +1,4 @@
-package pl.tbs;
+package pl.tbs.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.input.MouseEvent;
+import pl.tbs.model.Student;
 
 public class TableViewController {
 
