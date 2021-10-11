@@ -4,7 +4,7 @@
 <?import org.controlsfx.control.tableview2.FilteredTableColumn?>
 <?import org.controlsfx.control.tableview2.FilteredTableView?>
 
-<FilteredTableView fx:id="tableView" onMouseClicked="#tableClickEvent" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.TableViewController">
+<FilteredTableView fx:id="tableView" onMouseClicked="#tableClickEvent" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.controller.TableViewController">
    <columns>
               <FilteredTableColumn fx:id="yearColumn" prefWidth="75.0" text="Year" />
               <FilteredTableColumn fx:id="formColumn" prefWidth="75.0" text="Class" />

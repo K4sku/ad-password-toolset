@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import org.controlsfx.control.SegmentedButton?>
 
-<AnchorPane fx:id="filterBar" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.FilterBarController">
+<AnchorPane fx:id="filterBar" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.controller.FilterBarController">
     <children>
         <ToggleButton fx:id="ytPreNur" mnemonicParsing="false" prefHeight="35.0" styleClass="yearToggle" text="Pre-Nur" />
         <ToggleButton fx:id="ytNur" mnemonicParsing="false" prefHeight="35.0" styleClass="yearToggle" text="Nursery" />

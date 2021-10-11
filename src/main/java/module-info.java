@@ -9,5 +9,7 @@ module pl.tbs {
     requires java.net.http;
 
     opens pl.tbs to javafx.fxml;
+    opens pl.tbs.controller to javafx.fxml;
+    opens pl.tbs.model to javafx.fxml;
     exports pl.tbs;
 }

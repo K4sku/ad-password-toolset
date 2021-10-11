@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane minWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.ActionsBarController">
+<AnchorPane minWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.controller.ActionsBarController">
    <children>
       <Label text="Password operations" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
          <font>
