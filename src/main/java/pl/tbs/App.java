@@ -1,36 +1,24 @@
 package pl.tbs;
 
-import org.controlsfx.control.NotificationPane;
+import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.FileChooser;
-import javafx.scene.layout.VBox;
-
-import java.io.IOException;
 
 /**
  * JavaFX App
  */
 public class App extends Application {
 
+    private static Scene scene;
+
     @Override
     public void start(Stage stage) throws IOException {
-
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(App.class.getResource("main.fxml"));
-        
-        VBox mainWindow = fxmlLoader.<VBox>load();
-        NotificationPane notificationPane = new NotificationPane(mainWindow);
-        
-        Scene scene = new Scene(notificationPane);
-        FileChooser fileChooser = new FileChooser();
-        MainController mainController = fxmlLoader.getController();
-        mainController.initFileChooser(fileChooser);
-
+        fxmlLoader.setLocation(getClass().getResource("main.fxml"));
+        scene = new Scene(fxmlLoader.load());
 
         stage.setTitle("AD password toolset - TBS Warsaw");
         stage.setScene(scene);

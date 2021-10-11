@@ -6,6 +6,7 @@ module pl.tbs {
     requires org.apache.poi.poi;
     requires org.apache.poi.ooxml;
     requires org.apache.commons.compress;
+    requires java.net.http;
 
     opens pl.tbs to javafx.fxml;
     exports pl.tbs;

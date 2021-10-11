@@ -1,4 +1,4 @@
-package pl.tbs;
+package pl.tbs.model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -47,7 +47,7 @@ public class Student {
     }
 
     public final void setForm(String form) {
-        this.formProperty().set(form);;
+        this.formProperty().set(form);
     }
 
     public final StringProperty upnProperty(){
