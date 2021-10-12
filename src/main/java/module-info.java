@@ -7,6 +7,7 @@ module pl.tbs {
     requires org.apache.poi.ooxml;
     requires org.apache.commons.compress;
     requires java.net.http;
+    requires org.apache.commons.lang3;
 
     opens pl.tbs to javafx.fxml;
     opens pl.tbs.controller to javafx.fxml;
