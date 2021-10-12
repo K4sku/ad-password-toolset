@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<VBox fx:id="logger" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.controller.LoggerController">
+<VBox fx:id="log" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.controller.LogController">
    <children>
       <Label fx:id="logLabel6" styleClass="logLabel" text="" />
       <Label fx:id="logLabel5" styleClass="logLabel" text="" />

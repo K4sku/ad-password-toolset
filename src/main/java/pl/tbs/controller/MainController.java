@@ -13,10 +13,11 @@ public class MainController {
     @FXML
     private ActionsBarController actionsBarController;
     @FXML
-    private LoggerController loggerController;
+    private LogController loggerController;
 
     public void initialize(){
         menuBarController.dInjection(loggerController, tableViewController);
+        actionsBarController.dInjection(loggerController, tableViewController);
     }
     
 }

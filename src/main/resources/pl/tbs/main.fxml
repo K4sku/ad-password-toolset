@@ -6,15 +6,15 @@
 
 <VBox minHeight="640.0" minWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.controller.MainController">
    <children>
-      <fx:include fx:id="menuBar" source="menuBar.fxml" />
-      <fx:include fx:id="filterBar" source="filterBar.fxml" />
-      <fx:include fx:id="tableView" source="tableView.fxml" />
-      <fx:include fx:id="actionsBar" source="actionsBar.fxml" />
+      <fx:include fx:id="menuBar" source="menuBar.fxml" VBox.vgrow="NEVER" />
+      <fx:include fx:id="filterBar" source="filterBar.fxml" VBox.vgrow="NEVER" />
+      <fx:include fx:id="tableView" source="tableView.fxml" VBox.vgrow="ALWAYS" />
+      <fx:include fx:id="actionsBar" source="actionsBar.fxml" VBox.vgrow="NEVER" />
       <Separator prefWidth="200.0">
          <VBox.margin>
             <Insets bottom="5.0" top="5.0" />
          </VBox.margin>
       </Separator>
-      <fx:include fx:id="logger" source="logger.fxml" />
+      <fx:include fx:id="log" source="log.fxml" VBox.vgrow="NEVER" />
    </children>
 </VBox>

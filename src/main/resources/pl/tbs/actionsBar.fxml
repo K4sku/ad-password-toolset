@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane minWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.controller.ActionsBarController">
    <children>
       <Label text="Password operations" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
@@ -19,12 +18,12 @@
       <HBox AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0">
          <children>
             <Button mnemonicParsing="false" text="Set to:" />
-            <TextField>
+            <TextField fx:id="passwordField">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" text="&lt; generate random" />
+            <Button fx:id="randomPasswordButton" mnemonicParsing="false" onAction="#onRandomPasswordButton" text="&lt; generate random" />
             <Button mnemonicParsing="false" text="Validate">
                <HBox.margin>
                   <Insets left="15.0" />
@@ -37,7 +36,6 @@
             </Button>
          </children>
       </HBox>
-      <Button mnemonicParsing="false" text="Log" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0" />
    </children>
    <padding>
       <Insets bottom="5.0" />

@@ -31,18 +31,19 @@ public class MenuBarController {
     @FXML
     private Menu addStudentMenu;
 
-    private LoggerController loggerC;
+    private LogController loggerC;
     private TableViewController tableViewC;
     private FileChooser fileChooser;
     private File selectedFile;
+    private String initialDirectory = "C:\\";
 
     public void initialize(){
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Spreadsheet", "*.xlsx"));
-        fileChooser.setInitialDirectory(new File("C:\\"));
+        fileChooser.setInitialDirectory(new File(initialDirectory));
     }
 
-    public void dInjection(LoggerController loggerC, TableViewController tableViewC) {
+    public void dInjection(LogController loggerC, TableViewController tableViewC) {
         this.loggerC = loggerC;
         this.tableViewC = tableViewC;
     }
@@ -91,6 +92,25 @@ public class MenuBarController {
     @FXML
     protected void onAddStudentMenu(){
         loggerC.add(new LogEntry("add student button"));
+    }
+
+    @FXML
+    protected void onAbout(){
+        String userIdentity = "";
+        String password ="";
+        try {
+            // PowershellAPI.executeCommand("Set-ADAccountPassword -Identity " + userIdentity +" -Server 'NAEWAWWLIDCO01.eu.nordanglia.com' -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "+ password +" -Force)");
+            PowershellResponse response = PowershellAPI.executeCommand("[System.Security.Principal.WindowsIdentity]::GetCurrent()");
+            if(response.hasError()){
+                loggerC.add(new LogEntry(LogLevel.ERROR, response.getErrorAsString()));
+            } else if (response.hasOutput()) {
+                loggerC.add(new LogEntry(LogLevel.INFO, response.getOutputAsString()));
+            } else {
+                loggerC.add(new LogEntry("Pasword for "+userIdentity+ "was reset"));
+            }
+        } catch (IOException e) {
+            loggerC.add(new LogEntry(LogLevel.ERROR, e.getLocalizedMessage()));
+        }
     }
 
     //disables open file button and enables other menu items if file is open.
