@@ -1,5 +1,6 @@
 package pl.tbs.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +27,7 @@ public class PowershellResponse {
     }
 
     public String getOutputAsString(){
+        if(output.isEmpty()) return null;
         return StringUtils.join(output, "\\n");
     }
 
@@ -34,6 +36,7 @@ public class PowershellResponse {
     }
 
     public void addOutputLine(String outputLine) {
+        if(output == null) output = new LinkedList<>();
         output.add(outputLine);
     }
 
@@ -42,6 +45,7 @@ public class PowershellResponse {
     }
 
     public String getErrorAsString(){
+        if(error.isEmpty()) return null;
         return StringUtils.join(error, "\\n");
     }
 
@@ -50,14 +54,15 @@ public class PowershellResponse {
     }
 
     public void addErrorLine(String errorLine) {
-        output.add(errorLine);
+        if(error == null) error = new LinkedList<>();
+        error.add(errorLine);
     }
 
     public boolean hasOutput(){
-        return !output.isEmpty();
+        return output != null;
     }
 
     public boolean hasError(){
-        return !error.isEmpty();
+        return error != null;
     }
 }
