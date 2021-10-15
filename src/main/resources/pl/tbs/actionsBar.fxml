@@ -10,26 +10,31 @@
 
 <AnchorPane minWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.controller.ActionsBarController">
    <children>
-      <Label text="Password operations" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
+      <Label text="Student:" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="chosenStudentLabel" layoutX="20.0" layoutY="10.0" textAlignment="CENTER" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="0.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <HBox AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Button mnemonicParsing="false" text="Set to:" />
+            <Button mnemonicParsing="false" onAction="#onSet" text="Set to:" />
             <TextField fx:id="passwordField">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
             </TextField>
             <Button fx:id="randomPasswordButton" mnemonicParsing="false" onAction="#onRandomPasswordButton" text="&lt; generate random" />
-            <Button mnemonicParsing="false" text="Validate">
+            <Button mnemonicParsing="false" onAction="#onValidate" text="Validate">
                <HBox.margin>
                   <Insets left="15.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Print">
+            <Button mnemonicParsing="false" onAction="#onPrint" text="Print">
                <HBox.margin>
                   <Insets left="15.0" />
                </HBox.margin>
