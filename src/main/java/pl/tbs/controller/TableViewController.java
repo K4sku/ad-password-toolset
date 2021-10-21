@@ -74,12 +74,18 @@ public class TableViewController {
         emailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
         passwordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());
 
-        passwordColumn.setCellFactory(c -> {
-            // plain old cell:
-            TableCell<Student, String> cell = new TableCell<>();
-            updateCell(cell);
-            return cell;
+        passwordColumn.setCellFactory(c -> new TableCell<Student, String>(){
+            @Override
+            protected void updateItem(Student student, String password) {
+                super.updateItem(student, password);
+                if(password != null && password.isEmpty()) {
+                    setText("");
+                } else {
+                    setText(maskPassword(password));
+                }
+            }
         });
+
 
         tableView.getSelectionModel().selectedItemProperty()
                 .addListener((obs, oldSelection, newSelection) -> studentDM.setSelectedStudent(newSelection));
