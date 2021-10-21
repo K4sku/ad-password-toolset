@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import pl.tbs.model.LogEntry;
 import pl.tbs.model.LogLevel;
+import pl.tbs.model.StudentDataModel;
 
 public class ActionsBarController {
     private LogController loggerC;
@@ -18,8 +20,11 @@ public class ActionsBarController {
     private Button randomPasswordButton;
     @FXML
     private TextField passwordField;
+    @FXML 
+    private Label chosenStudentLabel;
 
     private final DinoPassAPIClient dinopassAPI = new DinoPassAPIClient();
+    private StudentDataModel studentDM;
 
     public void initialize(){
 
@@ -30,6 +35,17 @@ public class ActionsBarController {
         this.tableViewC = tableViewC;
     }
 
+    public void initModel(StudentDataModel studentDM) {
+        if (this.studentDM != null) {
+            throw new IllegalStateException("StudentDataModel can only be initialized once");
+        }
+
+        this.studentDM = studentDM;
+
+        chosenStudentLabel.textProperty().bind(this.studentDM.getSelectedStudent().firstNameProperty());
+
+    }
+    
     @FXML
     private void onSetPasswordButton(){
         String userIdentity = "";
@@ -52,11 +68,25 @@ public class ActionsBarController {
     private void onRandomPasswordButton(){
         try {
             passwordField.setText(dinopassAPI.getNewPassword());
-        } catch (IOException | InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (IOException e) {
+            loggerC.add(new LogEntry(LogLevel.ERROR, e.getMessage()));
+        } catch (InterruptedException e){
+            loggerC.add(new LogEntry(LogLevel.ERROR, e.getMessage()));
+            Thread.currentThread().interrupt();
         }
     }
+
+    @FXML
+    private void onValidateButton(){
+        // TODO
+    }
+
+    @FXML
+    private void onPrintButton(){
+        // TODO
+    }
+
+
     
 
 }

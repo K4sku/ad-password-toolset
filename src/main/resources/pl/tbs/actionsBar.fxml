@@ -22,19 +22,19 @@
       </Label>
       <HBox AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#onSet" text="Set to:" />
+            <Button mnemonicParsing="false" onAction="#onSetPasswordButton" text="Set to:" />
             <TextField fx:id="passwordField">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
             </TextField>
             <Button fx:id="randomPasswordButton" mnemonicParsing="false" onAction="#onRandomPasswordButton" text="&lt; generate random" />
-            <Button mnemonicParsing="false" onAction="#onValidate" text="Validate">
+            <Button mnemonicParsing="false" onAction="#onValidateButton" text="Validate">
                <HBox.margin>
                   <Insets left="15.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onPrint" text="Print">
+            <Button mnemonicParsing="false" onAction="#onPrintButton" text="Print">
                <HBox.margin>
                   <Insets left="15.0" />
                </HBox.margin>
