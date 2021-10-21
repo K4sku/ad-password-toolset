@@ -2,6 +2,8 @@ package pl.tbs.model;
 
 import java.io.File;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -21,6 +23,8 @@ public class StudentDataModel {
         private final ObjectProperty<File> selectedFile = new SimpleObjectProperty<>();
         // is file opened
         private final BooleanProperty workbookOpen = new SimpleBooleanProperty();
+        // opened xlsx file
+        private final ObjectProperty<XSSFWorkbook> workbook = new SimpleObjectProperty<>();
 
         public final Student getSelectedStudent() {
             return selectedStudent.get();
@@ -46,7 +50,7 @@ public class StudentDataModel {
             selectedFile.set(file);
         }
 
-        public BooleanProperty workbookOpen(){
+        public BooleanProperty workbookOpenProperty(){
             return workbookOpen;
         }
 
@@ -57,6 +61,20 @@ public class StudentDataModel {
         public final void setWorkbookOpen(boolean arg) {
             workbookOpen.set(arg);
         }
+
+        public ObjectProperty<XSSFWorkbook> workbookProperty() {
+            return workbook;
+        }
+
+        public final XSSFWorkbook getWorkbook() {
+            return workbook.get();
+        }
+
+        public final void setWorkbook(XSSFWorkbook wb) {
+            workbook.set(wb);
+        }
+
+        
 
 
 

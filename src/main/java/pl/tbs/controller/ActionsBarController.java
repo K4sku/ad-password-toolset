@@ -13,6 +13,7 @@ import pl.tbs.model.StudentDataModel;
 public class ActionsBarController {
     private LogController loggerC;
     private TableViewController tableViewC;
+    private Logger logger = Logger.INSTANCE;
 
     @FXML
     private Button setPasswordButton;
@@ -53,14 +54,14 @@ public class ActionsBarController {
         try {
             PowershellResponse response = PowershellAPI.executeCommand("Set-ADAccountPassword -Identity " + userIdentity +" -Server 'NAEWAWWLIDCO01.eu.nordanglia.com' -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "+ password +" -Force)");
             if(response.hasError()){
-                loggerC.add(new LogEntry(LogLevel.ERROR, response.getErrorAsString()));
+                logger.add(new LogEntry(LogLevel.ERROR, response.getErrorAsString()));
             } else if (response.hasOutput()) {
-                loggerC.add(new LogEntry(LogLevel.INFO, response.getOutputAsString()));
+                logger.add(new LogEntry(LogLevel.INFO, response.getOutputAsString()));
             } else {
-                loggerC.add(new LogEntry("Pasword for "+userIdentity+ "was reset"));
+                logger.add(new LogEntry("Pasword for "+userIdentity+ "was reset"));
             }
         } catch (IOException e) {
-            loggerC.add(new LogEntry(LogLevel.ERROR, e.getLocalizedMessage()));
+            logger.add(new LogEntry(LogLevel.ERROR, e.getLocalizedMessage()));
         }
     }
 
@@ -69,9 +70,9 @@ public class ActionsBarController {
         try {
             passwordField.setText(dinopassAPI.getNewPassword());
         } catch (IOException e) {
-            loggerC.add(new LogEntry(LogLevel.ERROR, e.getMessage()));
+            logger.add(new LogEntry(LogLevel.ERROR, e.getMessage()));
         } catch (InterruptedException e){
-            loggerC.add(new LogEntry(LogLevel.ERROR, e.getMessage()));
+            logger.add(new LogEntry(LogLevel.ERROR, e.getMessage()));
             Thread.currentThread().interrupt();
         }
     }
@@ -83,6 +84,7 @@ public class ActionsBarController {
 
     @FXML
     private void onPrintButton(){
+        System.out.println("test");
         // TODO
     }
 

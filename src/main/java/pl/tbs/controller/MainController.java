@@ -1,6 +1,7 @@
 package pl.tbs.controller;
 
 import javafx.fxml.FXML;
+import pl.tbs.model.LogDataModel;
 import pl.tbs.model.StudentDataModel;
 
 public class MainController {
@@ -14,22 +15,28 @@ public class MainController {
     @FXML
     private ActionsBarController actionsBarController;
     @FXML
-    private LogController loggerController;
+    private LogController logController;
 
+    //TODO decide if needed - do not forget initDM method too
     private StudentDataModel studentDM;
+    private LogDataModel logDM;
 
     public void initialize(){
-        menuBarController.dInjection(loggerController, tableViewController);
-        actionsBarController.dInjection(loggerController, tableViewController);
-
-
+        menuBarController.dInjection(logController, tableViewController);
+        actionsBarController.dInjection(logController, tableViewController);
 
     }
     
-    public void initDM(StudentDataModel studentDM){
+    //initalize data models in controllers, singletons are initialized in App.java
+    public void initDM(StudentDataModel studentDM, LogDataModel logDM){
         this.studentDM = studentDM;
+        this.logDM = logDM;
         tableViewController.initModel(studentDM);
         actionsBarController.initModel(studentDM);
+        menuBarController.initModel(studentDM);
+        logController.initDM(logDM);
+
     }
+
     
 }
