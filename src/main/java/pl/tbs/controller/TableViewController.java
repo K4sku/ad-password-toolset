@@ -76,9 +76,9 @@ public class TableViewController {
 
         passwordColumn.setCellFactory(c -> new TableCell<Student, String>(){
             @Override
-            protected void updateItem(Student student, String password) {
-                super.updateItem(student, password);
-                if(password != null && password.isEmpty()) {
+            protected void updateItem(String password, boolean empty) {
+                super.updateItem(password, empty);
+                if(password == null || password.isEmpty()) {
                     setText("");
                 } else {
                     setText(maskPassword(password));
@@ -88,11 +88,16 @@ public class TableViewController {
 
 
         tableView.getSelectionModel().selectedItemProperty()
-                .addListener((obs, oldSelection, newSelection) -> studentDM.setSelectedStudent(newSelection));
+                .addListener((obs, oldSelection, newSelection) -> {
+                    System.out.println("selection: " + newSelection.getDisplayName());
+                    studentDM.setSelectedStudent(newSelection);
+                    System.out.println("studentDM.selectedStudent: " + studentDM.getSelectedStudent().getDisplayName());
+                }
+                );
 
         tableView.getSelectionModel().getSelectedItems().addListener(multiSelection);
 
-        // ObservableSet<Student> selectedSet = studentDM.getSelectedStudentsSet();
+        ObservableSet<Student> selectedSet = studentDM.getSelectedStudentsSet();
 
     }
 

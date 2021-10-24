@@ -43,8 +43,7 @@ public class ActionsBarController {
 
         this.studentDM = studentDM;
 
-        chosenStudentLabel.textProperty().bind(this.studentDM.getSelectedStudent().firstNameProperty());
-
+        chosenStudentLabel.textProperty().bind(studentDM.getSelectedStudent().firstNameProperty());
     }
     
     @FXML
