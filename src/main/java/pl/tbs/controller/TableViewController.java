@@ -64,7 +64,7 @@ public class TableViewController {
 
         this.studentDM = studentDM;
 
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        // tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setItems(this.studentDM.getStudentList());
         yearColumn.setCellValueFactory(cellData -> cellData.getValue().yearProperty());
         formColumn.setCellValueFactory(cellData -> cellData.getValue().formProperty());
@@ -74,11 +74,11 @@ public class TableViewController {
         emailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
         passwordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());
 
-        passwordColumn.setCellFactory(c -> new TableCell<Student, String>(){
+        passwordColumn.setCellFactory(c -> new TableCell<Student, String>() {
             @Override
             protected void updateItem(String password, boolean empty) {
                 super.updateItem(password, empty);
-                if(password == null || password.isEmpty()) {
+                if (password == null || password.isEmpty()) {
                     setText("");
                 } else {
                     setText(maskPassword(password));
@@ -86,16 +86,15 @@ public class TableViewController {
             }
         });
 
+        tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                studentDM.setSelectedStudent(newSelection);
+                System.out.println("selection: " + oldSelection + " -> " + newSelection);
+                System.out.println("studentDM.selectedStudent: " + studentDM.getSelectedStudent().getDisplayName());
+            }
+        });
 
-        tableView.getSelectionModel().selectedItemProperty()
-                .addListener((obs, oldSelection, newSelection) -> {
-                    System.out.println("selection: " + newSelection.getDisplayName());
-                    studentDM.setSelectedStudent(newSelection);
-                    System.out.println("studentDM.selectedStudent: " + studentDM.getSelectedStudent().getDisplayName());
-                }
-                );
-
-        tableView.getSelectionModel().getSelectedItems().addListener(multiSelection);
+        // tableView.getSelectionModel().getSelectedItems().addListener(multiSelection);
 
         ObservableSet<Student> selectedSet = studentDM.getSelectedStudentsSet();
 
@@ -145,7 +144,5 @@ public class TableViewController {
         // studentDM.getSelectedStudentsSet().add(tableView.getSelectionModel().getSelectedItem());
         // }
     }
-
-
 
 }

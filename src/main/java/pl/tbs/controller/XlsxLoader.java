@@ -40,7 +40,9 @@ public enum XlsxLoader {
             studentDM.getStudentList().clear();
             while (rowIterator.hasNext()) { // iterating over rows in sheet
                 Row row = rowIterator.next();
-                if (readCellValueAsString(row.getCell(row.getFirstCellNum())).equals("Year"))
+                if (readCellValueAsString(row.getCell(row.getFirstCellNum())).equals("Year") //skip if header column
+                || row.getPhysicalNumberOfCells() == 0  // skip if row is empty
+                || (row.getPhysicalNumberOfCells() >= 1 &&  row.getFirstCellNum() == 8)) //skip if row only contains powershell functions
                     continue;
                 Student student = new Student();
                 student.setYear(readCellValueAsString(row.getCell(0)));
