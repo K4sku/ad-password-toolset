@@ -1,19 +1,16 @@
 package pl.tbs.controller;
 
-import java.io.IOException;
-
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import pl.tbs.model.LogDataModel;
 import pl.tbs.model.LogEntry;
 
-public class LogController implements Log{
-    @FXML private VBox logger;
+public class LogController {
+    @FXML private VBox log;
     @FXML private Label logLabel1;
     @FXML private Label logLabel2;
     @FXML private Label logLabel3;
@@ -26,14 +23,33 @@ public class LogController implements Log{
     // @FXML
     // private Button popoutButton;
 
-    private ObservableList<LogEntry> observableLog = FXCollections.observableArrayList();
+    private LogDataModel logDM;
 
     public void initialize(){
         
     }
 
-    public void add(LogEntry logMsg){
-        observableLog.add(logMsg);
+    public void initDM(LogDataModel logDM) {
+        // ensure model is set once
+        if (this.logDM != null) {
+            throw new IllegalStateException("StudentDataModel can only be initialized once");
+        }
+
+        this.logDM = logDM;
+
+        logDM.gObservableList().addListener(new ListChangeListener<LogEntry>(){
+            @Override
+            public void onChanged(Change<? extends LogEntry> change){
+                change.next();
+                update(change.getAddedSubList().get(0));
+            }
+        });
+                
+
+        
+    }
+
+    public void update(LogEntry logMsg){
         logLabel6.setText(logLabel5.getText());
         logLabel5.setText(logLabel4.getText());
         logLabel4.setText(logLabel3.getText());

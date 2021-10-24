@@ -13,7 +13,9 @@ public class Student {
     private final StringProperty email = new SimpleStringProperty();
     private final StringProperty password = new SimpleStringProperty();
 
-    public Student(){};
+    public Student(){
+
+    }
 
     public Student(String year, String form, String upn, String firstName, String lastName, String displayName, String email, String password){
         setYear(year);
@@ -121,4 +123,30 @@ public class Student {
     public final void setPassword(String password) {
         this.passwordProperty().set(password);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        if (!year.get().equals(year.get())
+         || !form.get().equals(form.get())
+         || !upn.get().equals(upn.get())
+         || !firstName.get().equals(firstName.get())
+         || !lastName.get().equals(lastName.get())
+         || !displayName.get().equals(displayName.get())
+         || !email.get().equals(email.get())
+         || !password.get().equals(password.get()))
+            return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        // TODO Auto-generated method stub
+        return super.hashCode();
+    }
+
 }
+
+
