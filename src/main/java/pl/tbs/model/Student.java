@@ -129,15 +129,17 @@ public class Student {
         if (this == obj) return true;
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
-        if (!year.get().equals(year.get())
-         || !form.get().equals(form.get())
-         || !upn.get().equals(upn.get())
-         || !firstName.get().equals(firstName.get())
-         || !lastName.get().equals(lastName.get())
-         || !displayName.get().equals(displayName.get())
-         || !email.get().equals(email.get())
-         || !password.get().equals(password.get()))
-            return false;
+        //cast object to Student
+        Student other = (Student) obj;
+        //calls compare to ensure null safety, fields are ordered from most prominent diffrences
+        if (!compare(upn.get(),other.upn.get())) return false;
+        if (!compare(displayName.get(),other.displayName.get())) return false;
+        if (!compare(password.get(),other.password.get())) return false;
+        if (!compare(form.get(),other.form.get())) return false;
+        if (!compare(year.get(),other.year.get())) return false;
+        if (!compare(email.get(),other.email.get())) return false;
+        if (!compare(firstName.get(),other.firstName.get())) return false;
+        if (!compare(lastName.get(),other.lastName.get())) return false; 
         return true;
     }
 
@@ -145,6 +147,11 @@ public class Student {
     public int hashCode() {
         // TODO Auto-generated method stub
         return super.hashCode();
+    }
+
+    // copy of Apache Commons StringUtils#equals method 
+    private static boolean compare(String str1, String str2) {
+        return (str1 == null ? str2 == null : str1.equals(str2));
     }
 
 }

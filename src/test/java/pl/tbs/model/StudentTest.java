@@ -5,7 +5,18 @@ import static org.assertj.core.api.Assertions.*;
 
 
 public class StudentTest {
-    Student emptyStudent = new Student();
+    Student nullStudent = new Student();
+    Student emptyStudent = new Student(
+        "",
+        "",
+        "",
+        "", 
+        "",
+        "",
+        "",
+        ""
+    );
+
     Student studentOne = new Student(
         "1",
         "A",
@@ -31,12 +42,20 @@ public class StudentTest {
     @Test
     void equalsShouldPassWhenComparedToItself() {
         assertThat(studentOne).isEqualTo(studentOne);
+        assertThat(nullStudent).isEqualTo(nullStudent);
+    }
+
+    @Test
+    void equalsShouldNotFailWhenStringsAreEmptyOrNull() {
+        assertThat(nullStudent).isNotEqualTo(studentOne);
+        assertThat(studentOne).isNotEqualTo(nullStudent);
+        assertThat(nullStudent).isNotEqualTo(emptyStudent);
+        assertThat(emptyStudent).isNotEqualTo(nullStudent);
     }
 
     @Test
     void equalsShouldFailWhenComparedToNull() {
-        
-        assertThat(emptyStudent).isNotEqualTo(null);
+        assertThat(nullStudent).isNotEqualTo(null);
         assertThat(studentOne).isNotEqualTo(null);
     }
 
