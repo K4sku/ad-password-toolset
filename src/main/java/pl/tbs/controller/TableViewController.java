@@ -64,7 +64,7 @@ public class TableViewController {
 
         this.studentDM = studentDM;
 
-        // tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setItems(this.studentDM.getStudentList());
         yearColumn.setCellValueFactory(cellData -> cellData.getValue().yearProperty());
         formColumn.setCellValueFactory(cellData -> cellData.getValue().formProperty());
@@ -94,7 +94,7 @@ public class TableViewController {
             }
         });
 
-        // tableView.getSelectionModel().getSelectedItems().addListener(multiSelection);
+        tableView.getSelectionModel().getSelectedItems().addListener(multiSelection);
 
         ObservableSet<Student> selectedSet = studentDM.getSelectedStudentsSet();
 
@@ -121,6 +121,7 @@ public class TableViewController {
                 } else {
                     studentDM.getSelectedStudentsSet().removeAll(change.getRemoved());
                     studentDM.getSelectedStudentsSet().addAll(change.getAddedSubList());
+                    System.out.println("studentDM.selectedStudentsSet: " + studentDM.getSelectedStudentsSet().toString());
                 }
             }
         }
