@@ -30,6 +30,10 @@ public class StudentDataModel {
             return selectedStudent.get();
         }
 
+        public final ObjectProperty<Student> selectedStudentProperty() {
+            return selectedStudent;
+        }
+
         public final void setSelectedStudent(Student student) {
             selectedStudent.set(student);
         }

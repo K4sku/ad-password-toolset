@@ -2,6 +2,7 @@ package pl.tbs.controller;
 
 import java.io.IOException;
 
+import javafx.beans.binding.StringBinding;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,6 +37,7 @@ public class ActionsBarController {
         this.tableViewC = tableViewC;
     }
 
+    
     public void initModel(StudentDataModel studentDM) {
         if (this.studentDM != null) {
             throw new IllegalStateException("StudentDataModel can only be initialized once");
@@ -43,12 +45,33 @@ public class ActionsBarController {
 
         this.studentDM = studentDM;
 
-        chosenStudentLabel.textProperty().bind(studentDM.getSelectedStudent().firstNameProperty());
+        
+        chosenStudentLabel.textProperty().bind(new StringBinding() {
+            { 
+                studentDM.selectedStudentProperty().addListener((obs, oldStudent, newStudent) -> {
+                    if (oldStudent != null) {
+                        unbind(oldStudent.displayNameProperty());
+                    }
+                    if (newStudent != null) {
+                        bind(newStudent.displayNameProperty());
+                    }
+                    invalidate();
+                });
+            }
+            @Override
+            protected String computeValue() {
+                if (studentDM.getSelectedStudent() == null) {
+                    return "" ;
+                }
+                return studentDM.getSelectedStudent().getDisplayName();
+            }
+        });
+        
     }
     
     @FXML
     private void onSetPasswordButton(){
-        String userIdentity = "";
+        String userIdentity = studentDM.getSelectedStudent().getDisplayName();
         String password = passwordField.getText();
         try {
             PowershellResponse response = PowershellAPI.executeCommand("Set-ADAccountPassword -Identity " + userIdentity +" -Server 'NAEWAWWLIDCO01.eu.nordanglia.com' -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "+ password +" -Force)");
@@ -58,6 +81,7 @@ public class ActionsBarController {
                 logger.add(new LogEntry(LogLevel.INFO, response.getOutputAsString()));
             } else {
                 logger.add(new LogEntry("Pasword for "+userIdentity+ "was reset"));
+                studentDM.getSelectedStudent().setPassword(password);
             }
         } catch (IOException e) {
             logger.add(new LogEntry(LogLevel.ERROR, e.getLocalizedMessage()));
