@@ -11,6 +11,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.controlsfx.control.tableview2.FilteredTableColumn;
 import org.controlsfx.control.tableview2.FilteredTableView;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
+import org.controlsfx.control.tableview2.filter.popupfilter.PopupFilter;
+import org.controlsfx.control.tableview2.filter.popupfilter.PopupStringFilter;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableSet;
@@ -64,8 +67,26 @@ public class TableViewController {
 
         this.studentDM = studentDM;
 
+        //TODO rollback to TableView
+        //    public static <S> void configureForFiltering(FilteredTableView<S> tableView, ObservableList<S> items) {
+        // tableView.setBackingList(items);
+        // FilteredList<S> filteredData = new FilteredList<>(items);
+        // filteredData.predicateProperty().bind(tableView.predicateProperty());
+        // SortedList<S> sortedData = new SortedList<>(filteredData);
+        // sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        // tableView.setItems(sortedData);
+        // }
+
+        //https://code.makery.ch/blog/javafx-8-tableview-sorting-filtering/
+        //set placeplaceholder and sorting http://tutorials.jenkov.com/javafx/tableview.html 
+        //disable soring by row
+        //filtering https://stackoverflow.com/questions/17017364/fast-filtering-in-javafx-tableview
+
+        FilteredTableView.configureForFiltering(tableView, studentDM.getStudentList());
+
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setItems(this.studentDM.getStudentList());
+        tableView.setRowHeaderVisible(true);
+        // tableView.setItems(this.studentDM.getStudentList());
         yearColumn.setCellValueFactory(cellData -> cellData.getValue().yearProperty());
         formColumn.setCellValueFactory(cellData -> cellData.getValue().formProperty());
         upnColumn.setCellValueFactory(cellData -> cellData.getValue().upnProperty());
@@ -73,6 +94,12 @@ public class TableViewController {
         lNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
         emailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
         passwordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());
+
+        PopupFilter<Student, String> popupFirstNameFilter = new PopupStringFilter<>(fNameColumn);
+        fNameColumn.setOnFilterAction(e -> popupFirstNameFilter.showPopup());
+
+        SouthFilter<Student, String> editorFirstNameFilter = new SouthFilter<>(lNameColumn, String.class);
+        lNameColumn.setSouthNode(editorFirstNameFilter);
 
         passwordColumn.setCellFactory(c -> new TableCell<Student, String>() {
             @Override
