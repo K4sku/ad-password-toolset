@@ -6,7 +6,9 @@ import java.util.Arrays;
 import org.controlsfx.control.SegmentedButton;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import pl.tbs.model.StudentDataModel;
 
 public class FilterBarController {
     @FXML
@@ -41,8 +43,11 @@ public class FilterBarController {
     private ToggleButton ytY13;
     @FXML
     private SegmentedButton yearSelectionButtons;
+    @FXML
+    private TextField searchField;
 
     private ArrayList<ToggleButton> yearSelectionList;
+    private StudentDataModel studentDM;
     
     public void initialize() {
         yearSelectionList = new ArrayList<>(Arrays.asList(ytPreNur, ytNur, ytY1, ytY2, ytY3, ytY4, ytY5, ytY6, ytY7,
@@ -50,6 +55,38 @@ public class FilterBarController {
 
         yearSelectionButtons.setToggleGroup(null);
         yearSelectionButtons.getButtons().addAll(yearSelectionList);
+    }
+
+    public void initModel(StudentDataModel studentDM) {
+        // ensure model is set once
+        if (this.studentDM != null) {
+            throw new IllegalStateException("StudentDataModel can only be initialized once");
+        }
+
+        this.studentDM = studentDM;
+        setFilterPredicateListener();
+
+
+    }
+
+    private void setFilterPredicateListener() {
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
+            studentDM.getFilteredStudentList().setPredicate(student -> {
+                //If filter is empty display all
+                if (newVal == null || newVal.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newVal.toLowerCase();
+                //check if searched text is an email address, search email property if so
+                if (newVal.contains("@") || newVal.contains("_")) {
+                    return student.getEmail().toLowerCase().contains(lowerCaseFilter);
+                } else {
+                    //compare searched text with display name
+                    return student.getDisplayName().toLowerCase().contains(lowerCaseFilter);
+                }
+                
+            });
+        });
     }
 
     @FXML

@@ -11,10 +11,16 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 
 public class StudentDataModel {
         // complete student list
         private final ObservableList<Student> studentList = FXCollections.observableArrayList();
+        // Filtered list wrapper
+        private final FilteredList<Student> filteredStudentList = new FilteredList<>(studentList, p -> true);
+        // Sorted list wrapper
+        private final SortedList<Student> sortedStudentsList = new SortedList<>(filteredStudentList);
         // which passwords are shown:
         private final ObservableSet<Student> selectedStudentsSet = FXCollections.observableSet();
         // which student was selected last:
@@ -25,6 +31,18 @@ public class StudentDataModel {
         private final BooleanProperty workbookOpen = new SimpleBooleanProperty();
         // opened xlsx file
         private final ObjectProperty<XSSFWorkbook> workbook = new SimpleObjectProperty<>();
+
+        public ObservableList<Student> getStudentList() {
+            return studentList;
+        }
+
+        public FilteredList<Student> getFilteredStudentList() {
+            return filteredStudentList;
+        }
+
+        public SortedList<Student> getSortedStudentsList() {
+            return sortedStudentsList;
+        }
 
         public final Student getSelectedStudent() {
             return selectedStudent.get();
@@ -42,9 +60,6 @@ public class StudentDataModel {
             return selectedStudentsSet;
         }
 
-        public ObservableList<Student> getStudentList() {
-            return studentList;
-        }
 
         public final File getSelectedFile() {
             return selectedFile.get();

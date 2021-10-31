@@ -20,6 +20,8 @@ import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import pl.tbs.model.Student;
 import pl.tbs.model.StudentDataModel;
@@ -27,21 +29,21 @@ import pl.tbs.model.StudentDataModel;
 public class TableViewController {
 
     @FXML
-    private FilteredTableView<Student> tableView;
+    private TableView<Student> tableView;
     @FXML
-    private FilteredTableColumn<Student, String> yearColumn;
+    private TableColumn<Student, String> yearColumn;
     @FXML
-    private FilteredTableColumn<Student, String> formColumn;
+    private TableColumn<Student, String> formColumn;
     @FXML
-    private FilteredTableColumn<Student, String> upnColumn;
+    private TableColumn<Student, String> upnColumn;
     @FXML
-    private FilteredTableColumn<Student, String> fNameColumn;
+    private TableColumn<Student, String> fNameColumn;
     @FXML
-    private FilteredTableColumn<Student, String> lNameColumn;
+    private TableColumn<Student, String> lNameColumn;
     @FXML
-    private FilteredTableColumn<Student, String> emailColumn;
+    private TableColumn<Student, String> emailColumn;
     @FXML
-    private FilteredTableColumn<Student, String> passwordColumn;
+    private TableColumn<Student, String> passwordColumn;
 
     private StudentDataModel studentDM;
 
@@ -81,12 +83,10 @@ public class TableViewController {
         //set placeplaceholder and sorting http://tutorials.jenkov.com/javafx/tableview.html 
         //disable soring by row
         //filtering https://stackoverflow.com/questions/17017364/fast-filtering-in-javafx-tableview
-
-        FilteredTableView.configureForFiltering(tableView, studentDM.getStudentList());
+        studentDM.getSortedStudentsList().comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setRowHeaderVisible(true);
-        // tableView.setItems(this.studentDM.getStudentList());
+        tableView.setItems(this.studentDM.getSortedStudentsList());
         yearColumn.setCellValueFactory(cellData -> cellData.getValue().yearProperty());
         formColumn.setCellValueFactory(cellData -> cellData.getValue().formProperty());
         upnColumn.setCellValueFactory(cellData -> cellData.getValue().upnProperty());
@@ -95,11 +95,6 @@ public class TableViewController {
         emailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
         passwordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());
 
-        PopupFilter<Student, String> popupFirstNameFilter = new PopupStringFilter<>(fNameColumn);
-        fNameColumn.setOnFilterAction(e -> popupFirstNameFilter.showPopup());
-
-        SouthFilter<Student, String> editorFirstNameFilter = new SouthFilter<>(lNameColumn, String.class);
-        lNameColumn.setSouthNode(editorFirstNameFilter);
 
         passwordColumn.setCellFactory(c -> new TableCell<Student, String>() {
             @Override
