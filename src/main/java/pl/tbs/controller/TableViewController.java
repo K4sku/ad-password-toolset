@@ -18,6 +18,7 @@ import org.controlsfx.control.tableview2.filter.popupfilter.PopupStringFilter;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -31,7 +32,7 @@ public class TableViewController {
     @FXML
     private TableView<Student> tableView;
     @FXML
-    private TableColumn<Student, String> yearColumn;
+    private TableColumn<Student, Student.Year> yearColumn;
     @FXML
     private TableColumn<Student, String> formColumn;
     @FXML
@@ -53,9 +54,6 @@ public class TableViewController {
     // which passwords are shown:
     // private ObservableSet<Student> studentsWithShownPasswords =
     // FXCollections.observableSet();
-    private File selectedFile;
-    private XSSFWorkbook workbook;
-    private boolean workbookOpen;
 
     public void initialize() {
 
@@ -69,20 +67,16 @@ public class TableViewController {
 
         this.studentDM = studentDM;
 
-        //TODO rollback to TableView
-        //    public static <S> void configureForFiltering(FilteredTableView<S> tableView, ObservableList<S> items) {
-        // tableView.setBackingList(items);
-        // FilteredList<S> filteredData = new FilteredList<>(items);
-        // filteredData.predicateProperty().bind(tableView.predicateProperty());
-        // SortedList<S> sortedData = new SortedList<>(filteredData);
-        // sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-        // tableView.setItems(sortedData);
-        // }
 
         //https://code.makery.ch/blog/javafx-8-tableview-sorting-filtering/
         //set placeplaceholder and sorting http://tutorials.jenkov.com/javafx/tableview.html 
         //disable soring by row
         //filtering https://stackoverflow.com/questions/17017364/fast-filtering-in-javafx-tableview
+        tableView.setPlaceholder(new Label("Load excel file to display data"));
+        tableView.getSortOrder().addAll(yearColumn, formColumn, fNameColumn, lNameColumn);
+
+        tableView.setOnSort(event -> event.consume());
+
         studentDM.getSortedStudentsList().comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -95,6 +89,19 @@ public class TableViewController {
         emailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
         passwordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());
 
+        yearColumn.setCellFactory(c -> new TableCell<Student, Student.Year>() {
+            @Override
+            protected void updateItem(Student.Year year, boolean empty) {
+                super.updateItem(year, empty);
+                if (year == null) {
+                    setText("");
+                } else {
+                    // setText(Student.Year.getDisplayText(this.getTableRow().getItem().yearProperty().get()));
+                    setText(Student.Year.getDisplayText(year));
+                }
+            }
+        }
+        );
 
         passwordColumn.setCellFactory(c -> new TableCell<Student, String>() {
             @Override

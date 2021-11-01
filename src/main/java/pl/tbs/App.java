@@ -39,6 +39,8 @@ public class App extends Application {
         //setup stage
         stage.setTitle("AD password toolset - TBS Warsaw");
         stage.setScene(scene);
+        stage.setMinWidth(600.0);
+        stage.setMinHeight(800.0);
         stage.show();
     }
 

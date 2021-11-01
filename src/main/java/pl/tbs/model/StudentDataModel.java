@@ -1,9 +1,11 @@
 package pl.tbs.model;
 
 import java.io.File;
+import java.util.function.Predicate;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -21,9 +23,9 @@ public class StudentDataModel {
         private final FilteredList<Student> filteredStudentList = new FilteredList<>(studentList, p -> true);
         // Sorted list wrapper
         private final SortedList<Student> sortedStudentsList = new SortedList<>(filteredStudentList);
-        // which passwords are shown:
+        // which students are selected
         private final ObservableSet<Student> selectedStudentsSet = FXCollections.observableSet();
-        // which student was selected last:
+        // which student was selected last
         private final ObjectProperty<Student> selectedStudent = new SimpleObjectProperty<>(new Student());
         // xlsx source file
         private final ObjectProperty<File> selectedFile = new SimpleObjectProperty<>();
@@ -31,6 +33,10 @@ public class StudentDataModel {
         private final BooleanProperty workbookOpen = new SimpleBooleanProperty();
         // opened xlsx file
         private final ObjectProperty<XSSFWorkbook> workbook = new SimpleObjectProperty<>();
+
+        // public void studentDataModel() {
+
+        // }
 
         public ObservableList<Student> getStudentList() {
             return studentList;
@@ -59,6 +65,18 @@ public class StudentDataModel {
         public ObservableSet<Student> getSelectedStudentsSet() {
             return selectedStudentsSet;
         }
+
+        // public ObjectProperty<Predicate<Student>> stringFilter() {
+        //     return stringFilter;
+        // }
+
+        // public Predicate<Student> getStringFilter() {
+        //     return stringFilter.get();
+        // }
+
+        // public final void setStringFilter(Predicate<Student> predicate) {
+        //     stringFilter.set(predicate);
+        // }
 
 
         public final File getSelectedFile() {
