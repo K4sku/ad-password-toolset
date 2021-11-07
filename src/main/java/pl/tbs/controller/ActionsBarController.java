@@ -108,7 +108,7 @@ public class ActionsBarController {
     @FXML
     private void onPrintButton(){
         System.out.println("test");
-        // TODO
+        // https://examples.javacodegeeks.com/desktop-java/javafx/javafx-print-api/#default
     }
 
 
