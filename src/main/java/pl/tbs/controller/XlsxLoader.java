@@ -41,6 +41,8 @@ public enum XlsxLoader {
             studentDM.getStudentList().clear();
             while (rowIterator.hasNext()) { // iterating over rows in sheet
                 Row row = rowIterator.next();
+                // skip last row
+                if (row.getRowNum() < 0) continue;
                 if (readCellValueAsString(row.getCell(row.getFirstCellNum())).equals("Year") //skip if header column
                 || row.getPhysicalNumberOfCells() == 0  // skip if row is empty
                 || (row.getPhysicalNumberOfCells() >= 1 &&  row.getFirstCellNum() == 8)) //skip if row only contains powershell functions
@@ -82,8 +84,8 @@ public enum XlsxLoader {
     private Student.Year readCellValueAsEnum(org.apache.poi.ss.usermodel.Cell cell) {
         if (cell != null) {
             return switch (cell.getCellType()) {
-                case NUMERIC -> yearEnum[(int)cell.getNumericCellValue()];
-                case STRING -> Student.Year.valueOf(cell.getStringCellValue().trim().replace("-", "").toUpperCase());
+                case NUMERIC -> yearEnum[(int)cell.getNumericCellValue()+2];
+                case STRING -> Student.Year.valueOf(cell.getStringCellValue().trim().replace("-", "").replace(" ", "").toUpperCase());
                 default -> null;
             };
         }
