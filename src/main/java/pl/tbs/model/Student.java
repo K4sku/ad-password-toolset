@@ -1,10 +1,42 @@
 package pl.tbs.model;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.util.StringConverter;
 
 public class Student {
-    private final StringProperty year = new SimpleStringProperty();
+
+    public enum Year {
+        PRENURSERY, NURSERY, RECEPTION,YEAR1, YEAR2, YEAR3, YEAR4, YEAR5, 
+        YEAR6, YEAR7, YEAR8, YEAR9, YEAR10, YEAR11, YEAR12, YEAR13;
+
+        public static String getDisplayText(Year arg0) {
+            return switch (arg0) {
+                case PRENURSERY -> "Pre-Nur";
+                case NURSERY -> "Nursery";
+                case RECEPTION -> "Reception";
+                case YEAR1 -> "1";
+                case YEAR2 -> "2";
+                case YEAR3 -> "3";
+                case YEAR4 -> "4";
+                case YEAR5 -> "5";
+                case YEAR6 -> "6";
+                case YEAR7 -> "7";
+                case YEAR8 -> "8";
+                case YEAR9 -> "9";
+                case YEAR10 -> "10";
+                case YEAR11 -> "11";
+                case YEAR12 -> "12";
+                case YEAR13 -> "13";
+            };
+        }
+
+    }
+
+
+    private final ObjectProperty<Year> year = new SimpleObjectProperty<>();
     private final StringProperty form = new SimpleStringProperty();
     private final StringProperty upn = new SimpleStringProperty();
     private final StringProperty firstName = new SimpleStringProperty();
@@ -17,7 +49,7 @@ public class Student {
 
     }
 
-    public Student(String year, String form, String upn, String firstName, String lastName, String displayName, String email, String password){
+    public Student(Year year, String form, String upn, String firstName, String lastName, String displayName, String email, String password){
         setYear(year);
         setForm(form);
         setUpn(upn);
@@ -28,15 +60,15 @@ public class Student {
         setPassword(password);
     }
 
-    public final StringProperty yearProperty() {
+    public final ObjectProperty<Year> yearProperty() {
         return this.year;
     }
 
-    public final String getYear() {
+    public final Year getYear() {
         return this.year.get();
     }
 
-    public final void setYear(String year) {
+    public final void setYear(Year year) {
         this.yearProperty().set(year);
     }
 
@@ -136,7 +168,7 @@ public class Student {
         if (!compare(displayName.get(),other.displayName.get())) return false;
         if (!compare(password.get(),other.password.get())) return false;
         if (!compare(form.get(),other.form.get())) return false;
-        if (!compare(year.get(),other.year.get())) return false;
+        if (yearProperty().get() != other.yearProperty().get()) return false;
         if (!compare(email.get(),other.email.get())) return false;
         if (!compare(firstName.get(),other.firstName.get())) return false;
         if (!compare(lastName.get(),other.lastName.get())) return false; 

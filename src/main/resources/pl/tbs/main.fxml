@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox minHeight="640.0" minWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.controller.MainController">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.controller.MainController">
    <children>
       <fx:include fx:id="menuBar" source="menuBar.fxml" VBox.vgrow="NEVER" />
       <fx:include fx:id="filterBar" source="filterBar.fxml" VBox.vgrow="NEVER" />

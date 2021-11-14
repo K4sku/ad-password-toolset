@@ -35,6 +35,7 @@ public class MainController {
         actionsBarController.initModel(studentDM);
         menuBarController.initModel(studentDM);
         logController.initDM(logDM);
+        filterBarController.initModel(studentDM);
 
     }
 

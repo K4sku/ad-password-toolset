@@ -18,8 +18,11 @@ import org.controlsfx.control.tableview2.filter.popupfilter.PopupStringFilter;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import pl.tbs.model.Student;
 import pl.tbs.model.StudentDataModel;
@@ -27,21 +30,21 @@ import pl.tbs.model.StudentDataModel;
 public class TableViewController {
 
     @FXML
-    private FilteredTableView<Student> tableView;
+    private TableView<Student> tableView;
     @FXML
-    private FilteredTableColumn<Student, String> yearColumn;
+    private TableColumn<Student, Student.Year> yearColumn;
     @FXML
-    private FilteredTableColumn<Student, String> formColumn;
+    private TableColumn<Student, String> formColumn;
     @FXML
-    private FilteredTableColumn<Student, String> upnColumn;
+    private TableColumn<Student, String> upnColumn;
     @FXML
-    private FilteredTableColumn<Student, String> fNameColumn;
+    private TableColumn<Student, String> fNameColumn;
     @FXML
-    private FilteredTableColumn<Student, String> lNameColumn;
+    private TableColumn<Student, String> lNameColumn;
     @FXML
-    private FilteredTableColumn<Student, String> emailColumn;
+    private TableColumn<Student, String> emailColumn;
     @FXML
-    private FilteredTableColumn<Student, String> passwordColumn;
+    private TableColumn<Student, String> passwordColumn;
 
     private StudentDataModel studentDM;
 
@@ -51,9 +54,6 @@ public class TableViewController {
     // which passwords are shown:
     // private ObservableSet<Student> studentsWithShownPasswords =
     // FXCollections.observableSet();
-    private File selectedFile;
-    private XSSFWorkbook workbook;
-    private boolean workbookOpen;
 
     public void initialize() {
 
@@ -67,26 +67,20 @@ public class TableViewController {
 
         this.studentDM = studentDM;
 
-        //TODO rollback to TableView
-        //    public static <S> void configureForFiltering(FilteredTableView<S> tableView, ObservableList<S> items) {
-        // tableView.setBackingList(items);
-        // FilteredList<S> filteredData = new FilteredList<>(items);
-        // filteredData.predicateProperty().bind(tableView.predicateProperty());
-        // SortedList<S> sortedData = new SortedList<>(filteredData);
-        // sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-        // tableView.setItems(sortedData);
-        // }
 
         //https://code.makery.ch/blog/javafx-8-tableview-sorting-filtering/
         //set placeplaceholder and sorting http://tutorials.jenkov.com/javafx/tableview.html 
         //disable soring by row
         //filtering https://stackoverflow.com/questions/17017364/fast-filtering-in-javafx-tableview
+        tableView.setPlaceholder(new Label("Load excel file to display data"));
+        tableView.getSortOrder().addAll(yearColumn, formColumn, fNameColumn, lNameColumn);
 
-        FilteredTableView.configureForFiltering(tableView, studentDM.getStudentList());
+        tableView.setOnSort(event -> event.consume());
+
+        studentDM.getSortedStudentsList().comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableView.setRowHeaderVisible(true);
-        // tableView.setItems(this.studentDM.getStudentList());
+        tableView.setItems(this.studentDM.getSortedStudentsList());
         yearColumn.setCellValueFactory(cellData -> cellData.getValue().yearProperty());
         formColumn.setCellValueFactory(cellData -> cellData.getValue().formProperty());
         upnColumn.setCellValueFactory(cellData -> cellData.getValue().upnProperty());
@@ -95,11 +89,19 @@ public class TableViewController {
         emailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
         passwordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());
 
-        PopupFilter<Student, String> popupFirstNameFilter = new PopupStringFilter<>(fNameColumn);
-        fNameColumn.setOnFilterAction(e -> popupFirstNameFilter.showPopup());
-
-        SouthFilter<Student, String> editorFirstNameFilter = new SouthFilter<>(lNameColumn, String.class);
-        lNameColumn.setSouthNode(editorFirstNameFilter);
+        yearColumn.setCellFactory(c -> new TableCell<Student, Student.Year>() {
+            @Override
+            protected void updateItem(Student.Year year, boolean empty) {
+                super.updateItem(year, empty);
+                if (year == null) {
+                    setText("");
+                } else {
+                    // setText(Student.Year.getDisplayText(this.getTableRow().getItem().yearProperty().get()));
+                    setText(Student.Year.getDisplayText(year));
+                }
+            }
+        }
+        );
 
         passwordColumn.setCellFactory(c -> new TableCell<Student, String>() {
             @Override

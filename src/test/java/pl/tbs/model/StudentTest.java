@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 public class StudentTest {
     Student nullStudent = new Student();
     Student emptyStudent = new Student(
-        "",
+        null,
         "",
         "",
         "", 
@@ -18,7 +18,7 @@ public class StudentTest {
     );
 
     Student studentOne = new Student(
-        "1",
+        Student.Year.YEAR1,
         "A",
         "keanu_reeves",
         "Keanu", 
@@ -29,7 +29,7 @@ public class StudentTest {
     );
 
     Student studentTwo = new Student(
-        "2",
+        Student.Year.YEAR2,
         "A",
         "keanu_reeves",
         "Keanu", 
