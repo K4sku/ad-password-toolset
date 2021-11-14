@@ -9,13 +9,14 @@ import javafx.util.StringConverter;
 public class Student {
 
     public enum Year {
-        NURSERY, YEAR1, YEAR2, YEAR3, YEAR4, YEAR5, 
-        YEAR6, YEAR7, YEAR8, YEAR9, YEAR10, YEAR11, YEAR12, YEAR13, PRENURSERY;
+        PRENURSERY, NURSERY, RECEPTION,YEAR1, YEAR2, YEAR3, YEAR4, YEAR5, 
+        YEAR6, YEAR7, YEAR8, YEAR9, YEAR10, YEAR11, YEAR12, YEAR13;
 
         public static String getDisplayText(Year arg0) {
             return switch (arg0) {
-                case NURSERY -> "Nursery";
                 case PRENURSERY -> "Pre-Nur";
+                case NURSERY -> "Nursery";
+                case RECEPTION -> "Reception";
                 case YEAR1 -> "1";
                 case YEAR2 -> "2";
                 case YEAR3 -> "3";
