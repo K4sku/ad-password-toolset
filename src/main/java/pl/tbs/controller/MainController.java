@@ -23,7 +23,7 @@ public class MainController {
 
     public void initialize(){
         menuBarController.dInjection(logController, tableViewController);
-        actionsBarController.dInjection(logController, tableViewController);
+        // actionsBarController.dInjection(logController, tableViewController);
 
     }
     

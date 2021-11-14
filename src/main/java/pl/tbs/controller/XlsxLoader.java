@@ -30,7 +30,8 @@ public enum XlsxLoader {
     public void loadWorkbookFromFile() {
         File selectedFile = studentDM.getSelectedFile();
         FileInputStream fis;
-        if (selectedFile == null) return;
+        if (selectedFile == null)
+            return;
         try {
             fis = new FileInputStream(selectedFile); // obtaining bytes from the file
             studentDM.setWorkbook(new XSSFWorkbook(fis)); // creating Workbook instance that refers to .xlsx file
@@ -42,10 +43,13 @@ public enum XlsxLoader {
             while (rowIterator.hasNext()) { // iterating over rows in sheet
                 Row row = rowIterator.next();
                 // skip last row
-                if (row.getRowNum() < 0) continue;
-                if (readCellValueAsString(row.getCell(row.getFirstCellNum())).equals("Year") //skip if header column
-                || row.getPhysicalNumberOfCells() == 0  // skip if row is empty
-                || (row.getPhysicalNumberOfCells() >= 1 &&  row.getFirstCellNum() == 8)) //skip if row only contains powershell functions
+                if (row.getRowNum() < 0)
+                    continue;
+                if (readCellValueAsString(row.getCell(row.getFirstCellNum())).equals("Year") // skip if header column
+                        || row.getPhysicalNumberOfCells() == 0 // skip if row is empty
+                        || (row.getPhysicalNumberOfCells() >= 1 && row.getFirstCellNum() == 8)) // skip if row only
+                                                                                                // contains powershell
+                                                                                                // functions
                     continue;
                 Student student = new Student();
                 student.setYear(readCellValueAsEnum(row.getCell(0)));
@@ -84,14 +88,14 @@ public enum XlsxLoader {
     private Student.Year readCellValueAsEnum(org.apache.poi.ss.usermodel.Cell cell) {
         if (cell != null) {
             return switch (cell.getCellType()) {
-                case NUMERIC -> yearEnum[(int)cell.getNumericCellValue()+2];
-                case STRING -> Student.Year.valueOf(cell.getStringCellValue().trim().replace("-", "").replace(" ", "").toUpperCase());
-                default -> null;
+            case NUMERIC -> yearEnum[(int) cell.getNumericCellValue() + 2];
+            case STRING -> Student.Year
+                    .valueOf(cell.getStringCellValue().trim().replace("-", "").replace(" ", "").toUpperCase());
+            default -> null;
             };
         }
         return null;
     }
-
 
     public void closeWorkbook() throws IOException {
         studentDM.getWorkbook().close();

@@ -9,32 +9,31 @@ import javafx.util.StringConverter;
 public class Student {
 
     public enum Year {
-        PRENURSERY, NURSERY, RECEPTION,YEAR1, YEAR2, YEAR3, YEAR4, YEAR5, 
-        YEAR6, YEAR7, YEAR8, YEAR9, YEAR10, YEAR11, YEAR12, YEAR13;
+        PRENURSERY, NURSERY, RECEPTION, YEAR1, YEAR2, YEAR3, YEAR4, YEAR5, YEAR6, YEAR7, YEAR8, YEAR9, YEAR10, YEAR11,
+        YEAR12, YEAR13;
 
         public static String getDisplayText(Year arg0) {
             return switch (arg0) {
-                case PRENURSERY -> "Pre-Nur";
-                case NURSERY -> "Nursery";
-                case RECEPTION -> "Reception";
-                case YEAR1 -> "1";
-                case YEAR2 -> "2";
-                case YEAR3 -> "3";
-                case YEAR4 -> "4";
-                case YEAR5 -> "5";
-                case YEAR6 -> "6";
-                case YEAR7 -> "7";
-                case YEAR8 -> "8";
-                case YEAR9 -> "9";
-                case YEAR10 -> "10";
-                case YEAR11 -> "11";
-                case YEAR12 -> "12";
-                case YEAR13 -> "13";
+            case PRENURSERY -> "Pre-Nur";
+            case NURSERY -> "Nursery";
+            case RECEPTION -> "Reception";
+            case YEAR1 -> "1";
+            case YEAR2 -> "2";
+            case YEAR3 -> "3";
+            case YEAR4 -> "4";
+            case YEAR5 -> "5";
+            case YEAR6 -> "6";
+            case YEAR7 -> "7";
+            case YEAR8 -> "8";
+            case YEAR9 -> "9";
+            case YEAR10 -> "10";
+            case YEAR11 -> "11";
+            case YEAR12 -> "12";
+            case YEAR13 -> "13";
             };
         }
 
     }
-
 
     private final ObjectProperty<Year> year = new SimpleObjectProperty<>();
     private final StringProperty form = new SimpleStringProperty();
@@ -45,11 +44,12 @@ public class Student {
     private final StringProperty email = new SimpleStringProperty();
     private final StringProperty password = new SimpleStringProperty();
 
-    public Student(){
+    public Student() {
 
     }
 
-    public Student(Year year, String form, String upn, String firstName, String lastName, String displayName, String email, String password){
+    public Student(Year year, String form, String upn, String firstName, String lastName, String displayName,
+            String email, String password) {
         setYear(year);
         setForm(form);
         setUpn(upn);
@@ -84,7 +84,7 @@ public class Student {
         this.formProperty().set(form);
     }
 
-    public final StringProperty upnProperty(){
+    public final StringProperty upnProperty() {
         return this.upn;
     }
 
@@ -96,7 +96,7 @@ public class Student {
         this.upnProperty().set(upn);
     }
 
-    public final StringProperty firstNameProperty(){
+    public final StringProperty firstNameProperty() {
         return this.firstName;
     }
 
@@ -108,7 +108,7 @@ public class Student {
         this.firstNameProperty().set(firstName);
     }
 
-    public final StringProperty lastNameProperty(){
+    public final StringProperty lastNameProperty() {
         return this.lastName;
     }
 
@@ -120,7 +120,7 @@ public class Student {
         this.lastNameProperty().set(lastName);
     }
 
-    public final StringProperty displayNameProperty(){
+    public final StringProperty displayNameProperty() {
         return this.displayName;
     }
 
@@ -132,7 +132,7 @@ public class Student {
         this.displayNameProperty().set(displayName);
     }
 
-    public final StringProperty emailProperty(){
+    public final StringProperty emailProperty() {
         return this.email;
     }
 
@@ -144,11 +144,11 @@ public class Student {
         this.emailProperty().set(email);
     }
 
-    public final StringProperty passwordProperty(){
+    public final StringProperty passwordProperty() {
         return this.password;
     }
 
-    public final String getPassword(){
+    public final String getPassword() {
         return passwordProperty().get();
     }
 
@@ -158,20 +158,32 @@ public class Student {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-        //cast object to Student
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        // cast object to Student
         Student other = (Student) obj;
-        //calls compare to ensure null safety, fields are ordered from most prominent diffrences
-        if (!compare(upn.get(),other.upn.get())) return false;
-        if (!compare(displayName.get(),other.displayName.get())) return false;
-        if (!compare(password.get(),other.password.get())) return false;
-        if (!compare(form.get(),other.form.get())) return false;
-        if (yearProperty().get() != other.yearProperty().get()) return false;
-        if (!compare(email.get(),other.email.get())) return false;
-        if (!compare(firstName.get(),other.firstName.get())) return false;
-        if (!compare(lastName.get(),other.lastName.get())) return false; 
+        // calls compare to ensure null safety, fields are ordered from most prominent
+        // diffrences
+        if (!compare(upn.get(), other.upn.get()))
+            return false;
+        if (!compare(displayName.get(), other.displayName.get()))
+            return false;
+        if (!compare(password.get(), other.password.get()))
+            return false;
+        if (!compare(form.get(), other.form.get()))
+            return false;
+        if (yearProperty().get() != other.yearProperty().get())
+            return false;
+        if (!compare(email.get(), other.email.get()))
+            return false;
+        if (!compare(firstName.get(), other.firstName.get()))
+            return false;
+        if (!compare(lastName.get(), other.lastName.get()))
+            return false;
         return true;
     }
 
@@ -181,11 +193,9 @@ public class Student {
         return super.hashCode();
     }
 
-    // copy of Apache Commons StringUtils#equals method 
+    // copy of Apache Commons StringUtils#equals method
     private static boolean compare(String str1, String str2) {
         return (str1 == null ? str2 == null : str1.equals(str2));
     }
 
 }
-
-

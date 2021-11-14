@@ -26,8 +26,9 @@ public class PowershellResponse {
         return output;
     }
 
-    public String getOutputAsString(){
-        if(output.isEmpty()) return null;
+    public String getOutputAsString() {
+        if (output.isEmpty())
+            return null;
         return StringUtils.join(output, "\\n");
     }
 
@@ -36,7 +37,8 @@ public class PowershellResponse {
     }
 
     public void addOutputLine(String outputLine) {
-        if(output == null) output = new LinkedList<>();
+        if (output == null)
+            output = new LinkedList<>();
         output.add(outputLine);
     }
 
@@ -44,8 +46,9 @@ public class PowershellResponse {
         return error;
     }
 
-    public String getErrorAsString(){
-        if(error.isEmpty()) return null;
+    public String getErrorAsString() {
+        if (error.isEmpty())
+            return null;
         return StringUtils.join(error, "\\n");
     }
 
@@ -54,15 +57,16 @@ public class PowershellResponse {
     }
 
     public void addErrorLine(String errorLine) {
-        if(error == null) error = new LinkedList<>();
+        if (error == null)
+            error = new LinkedList<>();
         error.add(errorLine);
     }
 
-    public boolean hasOutput(){
+    public boolean hasOutput() {
         return output != null;
     }
 
-    public boolean hasError(){
+    public boolean hasError() {
         return error != null;
     }
 }

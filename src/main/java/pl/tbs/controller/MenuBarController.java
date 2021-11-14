@@ -17,13 +17,13 @@ public class MenuBarController {
 
     @FXML
     private MenuBar menuBar;
-    @FXML 
+    @FXML
     private MenuItem openFileMenuItem;
-    @FXML 
+    @FXML
     private MenuItem reloadFileMenuItem;
-    @FXML 
+    @FXML
     private MenuItem closeFileMenuItem;
-    @FXML 
+    @FXML
     private MenuItem quitFileMenuItem;
     @FXML
     private Menu exportMenu;
@@ -40,8 +40,7 @@ public class MenuBarController {
     private StudentDataModel studentDM;
     private Logger logger = Logger.INSTANCE;
 
-
-    public void initialize(){
+    public void initialize() {
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Spreadsheet", "*.xlsx"));
         fileChooser.setInitialDirectory(new File(initialDirectory));
@@ -80,7 +79,7 @@ public class MenuBarController {
 
     @FXML
     protected void onCloseFileMenuItem() {
-        if (studentDM.isWorkbookOpen()){
+        if (studentDM.isWorkbookOpen()) {
             try {
                 XlsxLoader.INSTANCE.closeWorkbook();
                 setFileOpenedButtons(false);
@@ -92,53 +91,53 @@ public class MenuBarController {
     }
 
     @FXML
-    protected void onReloadFileMenuItem(){
+    protected void onReloadFileMenuItem() {
         logger.add(new LogEntry("Reloaded file: " + selectedFile.getName()));
     }
 
     @FXML
-    protected void onQuitFileMenuItem(){
+    protected void onQuitFileMenuItem() {
         Stage stage = (Stage) menuBar.getScene().getWindow();
         onCloseFileMenuItem();
         stage.close();
     }
 
     @FXML
-    protected void onAddStudentMenu(){
+    protected void onAddStudentMenu() {
         logger.add(new LogEntry("add student button"));
     }
 
     @FXML
-    protected void onAbout(){
+    protected void onAbout() {
         String userIdentity = "";
-        String password ="";
+        String password = "";
         try {
-            // PowershellAPI.executeCommand("Set-ADAccountPassword -Identity " + userIdentity +" -Server 'NAEWAWWLIDCO01.eu.nordanglia.com' -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "+ password +" -Force)");
-            PowershellResponse response = PowershellAPI.executeCommand("[System.Security.Principal.WindowsIdentity]::GetCurrent()");
-            if(response.hasError()){
+            // PowershellAPI.executeCommand("Set-ADAccountPassword -Identity " +
+            // userIdentity +" -Server 'NAEWAWWLIDCO01.eu.nordanglia.com' -Reset
+            // -NewPassword (ConvertTo-SecureString -AsPlainText "+ password +" -Force)");
+            PowershellResponse response = PowershellAPI
+                    .executeCommand("[System.Security.Principal.WindowsIdentity]::GetCurrent()");
+            if (response.hasError()) {
                 logger.add(new LogEntry(LogLevel.ERROR, response.getErrorAsString()));
             } else if (response.hasOutput()) {
                 logger.add(new LogEntry(LogLevel.INFO, response.getOutputAsString()));
             } else {
-                logger.add(new LogEntry("Pasword for "+userIdentity+ "was reset"));
+                logger.add(new LogEntry("Pasword for " + userIdentity + "was reset"));
             }
         } catch (IOException e) {
             logger.add(new LogEntry(LogLevel.ERROR, e.getLocalizedMessage()));
         }
     }
 
-    //disables open file button and enables other menu items if file is open.
-    //oppsite if file is closed.
-    private void setFileOpenedButtons(boolean fileOpened){
-            openFileMenuItem.setDisable(fileOpened);
-            reloadFileMenuItem.setDisable(!fileOpened);
-            closeFileMenuItem.setDisable(!fileOpened);
-            exportMenu.setDisable(!fileOpened);
-            toolsMenu.setDisable(!fileOpened);
-            addStudentMenu.setDisable(!fileOpened);
+    // disables open file button and enables other menu items if file is open.
+    // oppsite if file is closed.
+    private void setFileOpenedButtons(boolean fileOpened) {
+        openFileMenuItem.setDisable(fileOpened);
+        reloadFileMenuItem.setDisable(!fileOpened);
+        closeFileMenuItem.setDisable(!fileOpened);
+        exportMenu.setDisable(!fileOpened);
+        toolsMenu.setDisable(!fileOpened);
+        addStudentMenu.setDisable(!fileOpened);
     }
-
-
-
 
 }

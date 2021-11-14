@@ -16,11 +16,11 @@ public class LogEntry {
     }
 
     public LogEntry(final LogLevel logLevel, final String logMsg) {
-    if (logLevel != null) { 
-        this.logLevel = logLevel;
-     } else {
-         this.logLevel = LogLevel.INFO;
-    } 
+        if (logLevel != null) {
+            this.logLevel = logLevel;
+        } else {
+            this.logLevel = LogLevel.INFO;
+        }
         this.logMsg = logMsg;
         this.logTime = LocalTime.now();
     }
@@ -41,7 +41,7 @@ public class LogEntry {
         this.logMsg = logMsg;
     }
 
-    public LocalTime getLogTime(){
+    public LocalTime getLogTime() {
         return logTime;
     }
 

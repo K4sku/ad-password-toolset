@@ -10,9 +10,9 @@ public class PowershellAPI {
    * @throws IOException
    */
 
-   private PowershellAPI(){
-     //private constructor
-   }
+  private PowershellAPI() {
+    // private constructor
+  }
 
   public static void readVesrion() throws IOException {
     String command = "powershell.exe  $PSVersionTable.PSVersion";

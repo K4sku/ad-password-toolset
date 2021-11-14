@@ -1,19 +1,8 @@
 package pl.tbs.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.Iterator;
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.controlsfx.control.tableview2.FilteredTableColumn;
 import org.controlsfx.control.tableview2.FilteredTableView;
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
-import org.controlsfx.control.tableview2.filter.popupfilter.PopupFilter;
-import org.controlsfx.control.tableview2.filter.popupfilter.PopupStringFilter;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableSet;
@@ -67,11 +56,12 @@ public class TableViewController {
 
         this.studentDM = studentDM;
 
-
-        //https://code.makery.ch/blog/javafx-8-tableview-sorting-filtering/
-        //set placeplaceholder and sorting http://tutorials.jenkov.com/javafx/tableview.html 
-        //disable soring by row
-        //filtering https://stackoverflow.com/questions/17017364/fast-filtering-in-javafx-tableview
+        // https://code.makery.ch/blog/javafx-8-tableview-sorting-filtering/
+        // set placeplaceholder and sorting
+        // http://tutorials.jenkov.com/javafx/tableview.html
+        // disable soring by row
+        // filtering
+        // https://stackoverflow.com/questions/17017364/fast-filtering-in-javafx-tableview
         tableView.setPlaceholder(new Label("Load excel file to display data"));
         tableView.getSortOrder().addAll(yearColumn, formColumn, fNameColumn, lNameColumn);
 
@@ -100,8 +90,7 @@ public class TableViewController {
                     setText(Student.Year.getDisplayText(year));
                 }
             }
-        }
-        );
+        });
 
         passwordColumn.setCellFactory(c -> new TableCell<Student, String>() {
             @Override
@@ -150,7 +139,8 @@ public class TableViewController {
                 } else {
                     studentDM.getSelectedStudentsSet().removeAll(change.getRemoved());
                     studentDM.getSelectedStudentsSet().addAll(change.getAddedSubList());
-                    System.out.println("studentDM.selectedStudentsSet: " + studentDM.getSelectedStudentsSet().toString());
+                    System.out
+                            .println("studentDM.selectedStudentsSet: " + studentDM.getSelectedStudentsSet().toString());
                 }
             }
         }

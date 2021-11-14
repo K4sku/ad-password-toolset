@@ -89,7 +89,6 @@ public class FilterBarController {
         yearSelectionButtons.setToggleGroup(new ToggleGroup());
         yearSelectionButtons.getButtons().addAll(yearSelectionList);
         yearSelectionButtons.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        
 
         for (ToggleButton tb : yearSelectionList) {
             tb.selectedProperty().addListener((obs, oldVal, newVal) -> {
@@ -98,8 +97,7 @@ public class FilterBarController {
                 } else {
                     selectedBToggleButtons.remove(tb);
                 }
-            }
-            );
+            });
         }
     }
 
@@ -113,7 +111,7 @@ public class FilterBarController {
         setTextFilterPredicateBinding();
         setSelectionFilterPredicateBinding();
 
-        //sets combined filter to studentDM.filteredStudentList
+        // sets combined filter to studentDM.filteredStudentList
         studentDM.getFilteredStudentList().predicateProperty().bind(Bindings.createObjectBinding(
                 () -> stringFilter.get().and(selectionFilter.get()), stringFilter, selectionFilter));
 
@@ -137,13 +135,11 @@ public class FilterBarController {
     }
 
     private void setSelectionFilterPredicateBinding() {
-        selectionFilter.bind(Bindings.createObjectBinding(() -> 
-            student -> {
-                if (yearSelectionButtons.getToggleGroup().getSelectedToggle() == null) return true;
-                return buttonYearMap.get(yearSelectionButtons.getToggleGroup().getSelectedToggle()) == student.getYear();
-            },
-            selectedBToggleButtons));
+        selectionFilter.bind(Bindings.createObjectBinding(() -> student -> {
+            if (yearSelectionButtons.getToggleGroup().getSelectedToggle() == null)
+                return true;
+            return buttonYearMap.get(yearSelectionButtons.getToggleGroup().getSelectedToggle()) == student.getYear();
+        }, selectedBToggleButtons));
     }
-
 
 }

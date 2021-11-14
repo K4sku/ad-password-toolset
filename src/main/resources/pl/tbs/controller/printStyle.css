@@ -1,0 +1,8 @@
+.labels {
+  -fx-font-family: "Arial";
+  -fx-font-size: 14pt;
+}
+
+#password {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+}

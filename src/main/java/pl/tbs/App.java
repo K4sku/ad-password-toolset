@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.tbs.controller.Logger;
 import pl.tbs.controller.MainController;
+import pl.tbs.controller.PrinterAPI;
 import pl.tbs.controller.XlsxLoader;
 import pl.tbs.model.LogDataModel;
 import pl.tbs.model.StudentDataModel;
@@ -35,6 +36,7 @@ public class App extends Application {
         //setup singletons
         XlsxLoader.INSTANCE.initModel(studentDM);
         Logger.INSTANCE.initDM(logDM);
+        PrinterAPI.INSTANCE.setupPrinter();
 
         //setup stage
         stage.setTitle("AD password toolset - TBS Warsaw");
