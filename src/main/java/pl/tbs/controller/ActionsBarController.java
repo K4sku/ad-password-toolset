@@ -63,7 +63,7 @@ public class ActionsBarController {
 
     @FXML
     private void onSetPasswordButton() {
-        String userIdentity = studentDM.getSelectedStudent().getDisplayName();
+        String userIdentity = studentDM.getSelectedStudent().getUpn();
         String password = passwordField.getText();
         try {
             PowershellResponse response = PowershellAPI.executeCommand("Set-ADAccountPassword -Identity " + userIdentity
