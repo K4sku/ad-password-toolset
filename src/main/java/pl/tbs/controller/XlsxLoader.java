@@ -35,17 +35,13 @@ public enum XlsxLoader {
         try {
             fis = new FileInputStream(selectedFile); // obtaining bytes from the file
             studentDM.setWorkbook(new XSSFWorkbook(fis)); // creating Workbook instance that refers to .xlsx file
-            studentDM.setWorkbookOpen(true);
             studentDM.getWorkbook().setMissingCellPolicy(Row.MissingCellPolicy.RETURN_NULL_AND_BLANK);
             XSSFSheet sheet = studentDM.getWorkbook().getSheetAt(0); // creating a Sheet object to retrieve object
             Iterator<Row> rowIterator = sheet.rowIterator();
             studentDM.getStudentList().clear();
             while (rowIterator.hasNext()) { // iterating over rows in sheet
                 Row row = rowIterator.next();
-                // skip last row
-                if (row.getRowNum() < 0)
-                    continue;
-                if (readCellValueAsString(row.getCell(row.getFirstCellNum())).equals("Year") // skip if header column
+                if (row.getRowNum() <= 1 // skip last row
                         || row.getPhysicalNumberOfCells() == 0 // skip if row is empty
                         || (row.getPhysicalNumberOfCells() >= 1 && row.getFirstCellNum() == 8)) // skip if row only
                                                                                                 // contains powershell
@@ -60,6 +56,9 @@ public enum XlsxLoader {
                 student.setDisplayName(readCellValueAsString(row.getCell(5)));
                 student.setEmail(readCellValueAsString(row.getCell(6)));
                 student.setPassword(readCellValueAsString(row.getCell(7)));
+                // add student to StudentList if not empty
+                if(student.isStudentEmpty())
+                    continue;
                 studentDM.getStudentList().add(student);
             }
             studentDM.setWorkbookOpen(true);
@@ -72,11 +71,11 @@ public enum XlsxLoader {
     private String readCellValueAsString(org.apache.poi.ss.usermodel.Cell cell) {
         if (cell != null) {
             return switch (cell.getCellType()) {
-            case _NONE -> "<NONE>";
+            case _NONE -> null;
             case NUMERIC -> String.valueOf((int) cell.getNumericCellValue());
             case STRING -> cell.getStringCellValue();
             case FORMULA -> cell.getCellFormula();
-            case BLANK -> "<BLANK>";
+            case BLANK -> null;
             case BOOLEAN -> Boolean.toString(cell.getBooleanCellValue());
             case ERROR -> Byte.toString(cell.getErrorCellValue());
             default -> "UNKNOWN value of type " + cell.getCellType();

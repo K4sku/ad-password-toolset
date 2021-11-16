@@ -21,12 +21,6 @@ public class MainController {
     private StudentDataModel studentDM;
     private LogDataModel logDM;
 
-    public void initialize(){
-        menuBarController.dInjection(logController, tableViewController);
-        // actionsBarController.dInjection(logController, tableViewController);
-
-    }
-    
     //initalize data models in controllers, singletons are initialized in App.java
     public void initDM(StudentDataModel studentDM, LogDataModel logDM){
         this.studentDM = studentDM;
@@ -34,8 +28,8 @@ public class MainController {
         tableViewController.initModel(studentDM);
         actionsBarController.initModel(studentDM);
         menuBarController.initModel(studentDM);
-        logController.initDM(logDM);
         filterBarController.initModel(studentDM);
+        logController.initDM(logDM);
 
     }
 

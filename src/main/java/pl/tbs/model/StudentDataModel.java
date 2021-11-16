@@ -34,10 +34,6 @@ public class StudentDataModel {
     // opened xlsx file
     private final ObjectProperty<XSSFWorkbook> workbook = new SimpleObjectProperty<>();
 
-    // public void studentDataModel() {
-
-    // }
-
     public ObservableList<Student> getStudentList() {
         return studentList;
     }
@@ -65,18 +61,6 @@ public class StudentDataModel {
     public ObservableSet<Student> getSelectedStudentsSet() {
         return selectedStudentsSet;
     }
-
-    // public ObjectProperty<Predicate<Student>> stringFilter() {
-    // return stringFilter;
-    // }
-
-    // public Predicate<Student> getStringFilter() {
-    // return stringFilter.get();
-    // }
-
-    // public final void setStringFilter(Predicate<Student> predicate) {
-    // stringFilter.set(predicate);
-    // }
 
     public final File getSelectedFile() {
         return selectedFile.get();

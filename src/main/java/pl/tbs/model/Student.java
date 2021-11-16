@@ -1,10 +1,11 @@
 package pl.tbs.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.util.StringConverter;
 
 public class Student {
 
@@ -154,6 +155,14 @@ public class Student {
 
     public final void setPassword(String password) {
         this.passwordProperty().set(password);
+    }
+
+    public boolean isStudentEmpty() {
+        return StringUtils.isBlank(getUpn())
+                && StringUtils.isBlank(getFirstName())
+                && StringUtils.isBlank(getLastName()) 
+                && StringUtils.isBlank(getDisplayName()) 
+                && StringUtils.isBlank(getEmail());
     }
 
     @Override
