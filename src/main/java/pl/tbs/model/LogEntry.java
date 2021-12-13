@@ -1,28 +1,18 @@
 package pl.tbs.model;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class LogEntry {
     private LogLevel logLevel;
     private String logMsg;
-    private final LocalTime logTime;
-    private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-    public LogEntry(final String logMsg) {
-        this.logLevel = LogLevel.INFO;
-        this.logMsg = logMsg;
-        this.logTime = LocalTime.now();
-    }
+    private final LocalDateTime logDateTime;
+    private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
 
     public LogEntry(final LogLevel logLevel, final String logMsg) {
-        if (logLevel != null) {
-            this.logLevel = logLevel;
-        } else {
-            this.logLevel = LogLevel.INFO;
-        }
+        this.logLevel = logLevel;
         this.logMsg = logMsg;
-        this.logTime = LocalTime.now();
+        this.logDateTime = LocalDateTime.now();
     }
 
     public LogLevel getLogLevel() {
@@ -41,12 +31,12 @@ public class LogEntry {
         this.logMsg = logMsg;
     }
 
-    public LocalTime getLogTime() {
-        return logTime;
+    public LocalDateTime getLogTime() {
+        return logDateTime;
     }
 
     @Override
     public String toString() {
-        return "[" + logLevel + "] " + dtf.format(logTime) + " " + logMsg;
+        return "[" + logLevel + "] " + dtf.format(logDateTime) + " " + logMsg;
     }
 }

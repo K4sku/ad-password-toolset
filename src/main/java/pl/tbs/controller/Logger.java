@@ -19,16 +19,24 @@ public enum Logger implements Log {
         this.logDM = logDM;
     }
 
-    public void add(LogEntry entry) {
-        logDM.gObservableList().add(entry);
+    public void trace(String msg) {
+        logDM.gObservableList().add(new LogEntry(LogLevel.TRACE, msg));
     }
 
-    public void add(String message) {
-        logDM.gObservableList().add(new LogEntry(message));
+    public void debug(String msg) {
+        logDM.gObservableList().add(new LogEntry(LogLevel.DEBUG, msg));
     }
 
-    public void add(LogLevel level, String message) {
-        logDM.gObservableList().add(new LogEntry(level, message));
+    public void info(String msg) {
+        logDM.gObservableList().add(new LogEntry(LogLevel.INFO, msg));
+    }
+
+    public void warn(String msg) {
+        logDM.gObservableList().add(new LogEntry(LogLevel.WARN, msg));
+    }
+
+    public void error(String msg) {
+        logDM.gObservableList().add(new LogEntry(LogLevel.ERROR, msg));
     }
 
     public ObservableList<LogEntry> gObservableList() {

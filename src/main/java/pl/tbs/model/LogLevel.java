@@ -1,7 +1,9 @@
 package pl.tbs.model;
 
 public enum LogLevel {
+    TRACE,
+    DEBUG,
     INFO, 
-    WARNING, 
+    WARN, 
     ERROR
 }
