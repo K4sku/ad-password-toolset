@@ -172,6 +172,84 @@ public class Student {
         this.passwordProperty().set(password);
     }
 
+    public static final class Builder {
+        private Integer rowNumber;
+        private Year year;
+        private String form;
+        private String upn;
+        private String firstName;
+        private String lastName;
+        private String displayName;
+        private String email;
+        private String password;
+
+        public Builder rowNumber(int rowNumber) {
+            this.rowNumber = rowNumber;
+            return this;
+        }
+
+        public Builder year(Year year) {
+            this.year = year;
+            return this;
+        }
+
+        public Builder form(String form) {
+            this.form = form;
+            return this;
+        }
+
+        public Builder upn(String upn) {
+            this.upn = upn;
+            return this;
+        }
+
+        public Builder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder displayName(String displayName) {
+            this.displayName = displayName;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Student build() {
+            if (upn.isEmpty()) {
+                throw new IllegalStateException("Upn is required");
+            }
+            if (year == null) {
+                throw new IllegalStateException("Year is required");
+            }
+            Student student = new Student();
+            student.setRowNumber(rowNumber);
+            student.setYear(year);
+            student.setForm(form);
+            student.setUpn(upn);
+            student.setFirstName(firstName);
+            student.setLastName(lastName);
+            student.setDisplayName(displayName);
+            student.setEmail(email);
+            student.setPassword(password);
+            return student;
+        }
+
+    }
+
     public boolean isStudentEmpty() {
         return StringUtils.isBlank(getUpn())
                 && StringUtils.isBlank(getFirstName())
