@@ -8,9 +8,10 @@ module pl.tbs {
     requires org.apache.commons.compress;
     requires java.net.http;
     requires org.apache.commons.lang3;
+    requires com.google.gson;
 
     opens pl.tbs to javafx.fxml;
     opens pl.tbs.controller to javafx.fxml;
-    opens pl.tbs.model to javafx.fxml;
+    opens pl.tbs.model to javafx.fxml, com.google.gson;
     exports pl.tbs;
 }

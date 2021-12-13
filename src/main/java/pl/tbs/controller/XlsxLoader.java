@@ -57,7 +57,7 @@ public enum XlsxLoader {
                 student.setEmail(readCellValueAsString(row.getCell(6)));
                 student.setPassword(readCellValueAsString(row.getCell(7)));
                 // add student to StudentList if not empty
-                if(student.isStudentEmpty())
+                if (student.isStudentEmpty())
                     continue;
                 studentDM.getStudentList().add(student);
             }
