@@ -21,7 +21,11 @@ public class MenuBarController {
     @FXML
     private MenuItem reloadFileMenuItem;
     @FXML
+    private MenuItem saveFileMenuItem;
+    @FXML
     private MenuItem closeFileMenuItem;
+    @FXML
+    private MenuItem autoSaveFileMenuItem;
     @FXML
     private MenuItem quitFileMenuItem;
     @FXML
@@ -29,7 +33,9 @@ public class MenuBarController {
     @FXML
     private Menu toolsMenu;
     @FXML
-    private Menu addStudentMenu;
+    private MenuItem addStudentMenuItem;
+    @FXML
+    private MenuItem settingsMenuItem;
 
     private FileChooser fileChooser;
     private File selectedFile;
@@ -59,14 +65,24 @@ public class MenuBarController {
         if (selectedFile != null && selectedFile.isFile()) {
             if (selectedFile.canWrite()) {
                 studentDM.setSelectedFile(selectedFile);
-                XlsxLoader.INSTANCE.loadWorkbookFromFile();
-                logger.add("Loaded file: " + selectedFile.getName());
+                XlsxHandler.INSTANCE.loadWorkbookFromFile();
+                logger.info("Loaded file: " + selectedFile.getName());
                 setFileOpenedButtons(true);
             } else {
-                logger.add(LogLevel.ERROR, "You do not have permissions to this file");
+                logger.error("You do not have permissions to this file");
             }
         } else {
-            logger.add(LogLevel.ERROR, "File does not exists");
+            logger.error("File does not exists");
+        }
+    }
+
+    @FXML
+    protected void onSaveFileMenuItem() {
+        if (selectedFile != null) {
+            XlsxHandler.INSTANCE.saveWorkbookToFile();
+            logger.info("Saved file: " + selectedFile.getName());
+        } else {
+            logger.error("No file selected");
         }
     }
 
@@ -74,10 +90,10 @@ public class MenuBarController {
     protected void onCloseFileMenuItem() {
         if (studentDM.isWorkbookOpen()) {
             try {
-                XlsxLoader.INSTANCE.closeWorkbook();
+                XlsxHandler.INSTANCE.closeWorkbook();
                 setFileOpenedButtons(false);
             } catch (IOException e) {
-                logger.add(LogLevel.WARNING, "File could not be closed");
+                logger.warn("File could not be closed");
                 e.printStackTrace();
             }
         }
@@ -85,7 +101,12 @@ public class MenuBarController {
 
     @FXML
     protected void onReloadFileMenuItem() {
-        logger.add("Reloaded file: " + selectedFile.getName());
+        logger.info("Reloaded file: " + selectedFile.getName());
+    }
+
+    @FXML
+    protected void onAutoSaveFileMenuItem() {
+        // logger.add("Auto-saved file: " + selectedFile.getName());
     }
 
     @FXML
@@ -96,13 +117,21 @@ public class MenuBarController {
     }
 
     @FXML
-    protected void onAddStudentMenu() {
-        logger.add("add student button");
+    protected void onAddStudentMenuItem() {
+        logger.trace("add student button");
+        
+    }
+
+    
+    @FXML
+    protected void onSettingsMenuItem() {
+        logger.trace("settings button");
+        
     }
 
     @FXML
     protected void onAbout() {
-        logger.add("about button");
+        logger.trace("about button");
     }
 
     // disables open file button and enables other menu items if file is open.
@@ -110,10 +139,11 @@ public class MenuBarController {
     private void setFileOpenedButtons(boolean fileOpened) {
         openFileMenuItem.setDisable(fileOpened);
         reloadFileMenuItem.setDisable(!fileOpened);
+        saveFileMenuItem.setDisable(!fileOpened);
         closeFileMenuItem.setDisable(!fileOpened);
         exportMenu.setDisable(!fileOpened);
-        toolsMenu.setDisable(!fileOpened);
-        addStudentMenu.setDisable(!fileOpened);
+        toolsMenu.setDisable(fileOpened);
+        addStudentMenuItem.setDisable(!fileOpened);
     }
 
 }

@@ -1,7 +1,11 @@
 package pl.tbs.controller;
 
+import java.util.Optional;
+
 import javafx.fxml.FXML;
+import javafx.scene.control.TextInputDialog;
 import pl.tbs.model.LogDataModel;
+import pl.tbs.model.SettingsDataModel;
 import pl.tbs.model.StudentDataModel;
 
 public class MainController {
@@ -17,20 +21,31 @@ public class MainController {
     @FXML
     private LogController logController;
 
-    //TODO decide if needed - do not forget initDM method too
-    private StudentDataModel studentDM;
-    private LogDataModel logDM;
+    private SettingsDataModel settingsDM;
 
     //initalize data models in controllers, singletons are initialized in App.java
-    public void initDM(StudentDataModel studentDM, LogDataModel logDM){
-        this.studentDM = studentDM;
-        this.logDM = logDM;
+    public void initDM(StudentDataModel studentDM, LogDataModel logDM, SettingsDataModel settingsDM) {
+        this.settingsDM = settingsDM;
         tableViewController.initModel(studentDM);
-        actionsBarController.initModel(studentDM);
+        actionsBarController.initModel(studentDM, settingsDM);
         menuBarController.initModel(studentDM);
         filterBarController.initModel(studentDM);
         logController.initDM(logDM);
 
+    }
+
+    //open popup window asking for domain controller name
+    public void openDomainDialog() {
+        TextInputDialog dialog = new TextInputDialog("server.domain.com");
+        dialog.setTitle("Domain Controller server");
+        dialog.setHeaderText("Enter domain controller server name");
+
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            settingsDM.setDomainController(result.get());
+            SettingsManager.INSTANCE.saveSettings();
+        }
     }
 
     

@@ -3,6 +3,7 @@ package pl.tbs.model;
 import java.io.File;
 import java.util.function.Predicate;
 
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javafx.beans.binding.Bindings;
@@ -33,6 +34,8 @@ public class StudentDataModel {
     private final BooleanProperty workbookOpen = new SimpleBooleanProperty();
     // opened xlsx file
     private final ObjectProperty<XSSFWorkbook> workbook = new SimpleObjectProperty<>();
+    // selected sheet
+    private final ObjectProperty<XSSFSheet> selectedSheet = new SimpleObjectProperty<>();
 
     public ObservableList<Student> getStudentList() {
         return studentList;
@@ -92,6 +95,18 @@ public class StudentDataModel {
 
     public final void setWorkbook(XSSFWorkbook wb) {
         workbook.set(wb);
+    }
+
+    public ObjectProperty<XSSFSheet> selectedSheetProperty() {
+        return selectedSheet;
+    }
+
+    public final XSSFSheet getSelectedSheet() {
+        return selectedSheet.get();
+    }
+
+    public final void setSelectedSheet(XSSFSheet sheet) {
+        selectedSheet.set(sheet);
     }
 
 }

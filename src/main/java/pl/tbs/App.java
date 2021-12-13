@@ -8,9 +8,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.tbs.controller.Logger;
 import pl.tbs.controller.MainController;
-import pl.tbs.controller.PrinterAPI;
-import pl.tbs.controller.XlsxLoader;
+import pl.tbs.controller.PrinterHandler;
+import pl.tbs.controller.SettingsManager;
+import pl.tbs.controller.XlsxHandler;
 import pl.tbs.model.LogDataModel;
+import pl.tbs.model.SettingsDataModel;
 import pl.tbs.model.StudentDataModel;
 
 /**
@@ -31,12 +33,22 @@ public class App extends Application {
         //init data model and inject to controllers
         StudentDataModel studentDM = new StudentDataModel();
         LogDataModel logDM = new LogDataModel();
-        mainController.initDM(studentDM, logDM);
+        SettingsDataModel settingsDM = new SettingsDataModel();
+        mainController.initDM(studentDM, logDM, settingsDM);
 
         //setup singletons
-        XlsxLoader.INSTANCE.initModel(studentDM);
+        XlsxHandler.INSTANCE.initModel(studentDM);
         Logger.INSTANCE.initDM(logDM);
-        PrinterAPI.INSTANCE.setupPrinter();
+        PrinterHandler.INSTANCE.setupPrinter();
+        SettingsManager.INSTANCE.initDM(settingsDM);
+
+        //settings initialization
+        SettingsManager.INSTANCE.initSettings();
+
+        //open dialog window if domain is not set
+        if (!settingsDM.isDomainControllerSet()) {
+            mainController.openDomainDialog();
+        }
 
         //setup stage
         stage.setTitle("AD password toolset - TBS Warsaw");

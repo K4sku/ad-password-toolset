@@ -2,7 +2,9 @@ package pl.tbs.model;
 
 import org.apache.commons.lang3.StringUtils;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -36,6 +38,7 @@ public class Student {
 
     }
 
+    private final IntegerProperty rowNumber = new SimpleIntegerProperty();
     private final ObjectProperty<Year> year = new SimpleObjectProperty<>();
     private final StringProperty form = new SimpleStringProperty();
     private final StringProperty upn = new SimpleStringProperty();
@@ -59,6 +62,18 @@ public class Student {
         setDisplayName(displayName);
         setEmail(email);
         setPassword(password);
+    }
+
+    public final IntegerProperty rowNumberProperty() {
+        return this.rowNumber;
+    }
+
+    public final int getRowNumber() {
+        return this.rowNumberProperty().get();
+    }
+
+    public final void setRowNumber(int rowNumber) {
+        this.rowNumberProperty().set(rowNumber);
     }
 
     public final ObjectProperty<Year> yearProperty() {

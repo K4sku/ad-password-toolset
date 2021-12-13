@@ -7,8 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import pl.tbs.model.LogEntry;
-import pl.tbs.model.LogLevel;
+import pl.tbs.model.SettingsDataModel;
 import pl.tbs.model.StudentDataModel;
 
 public class ActionsBarController {
@@ -25,17 +24,19 @@ public class ActionsBarController {
 
     private final DinoPassAPIClient dinopassAPI = new DinoPassAPIClient();
     private StudentDataModel studentDM;
+    private SettingsDataModel settingsDM;
 
     public void initialize() {
 
     }
 
-    public void initModel(StudentDataModel studentDM) {
+    public void initModel(StudentDataModel studentDM, SettingsDataModel settingsDM) {
         if (this.studentDM != null) {
             throw new IllegalStateException("StudentDataModel can only be initialized once");
         }
 
         this.studentDM = studentDM;
+        this.settingsDM = settingsDM;
 
         chosenStudentLabel.textProperty().bind(new StringBinding() {
             {
@@ -66,20 +67,24 @@ public class ActionsBarController {
         String userIdentity = studentDM.getSelectedStudent().getUpn();
         String password = passwordField.getText();
         try {
-            PowershellResponse response = PowershellAPI.executeCommand("Set-ADAccountPassword -Identity " + userIdentity
-                    + " -Server 'NAEWAWWLIDCO01.eu.nordanglia.com' -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "
+            PowershellResponse response = PowershellHandler.executeCommand("Set-ADAccountPassword -Identity " + userIdentity
+                    + " -Server "+ settingsDM.getDomainController() +" -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "
                     + password + " -Force)");
             if (response.hasError()) {
-                logger.add(new LogEntry(LogLevel.ERROR, response.getErrorAsString()));
+                logger.error(response.getErrorAsString());
             } else if (response.hasOutput()) {
-                logger.add(new LogEntry(LogLevel.INFO, response.getOutputAsString()));
+                logger.debug(response.getOutputAsString());
             } else {
-                logger.add(new LogEntry("Pasword for " + userIdentity + "was reset"));
+                logger.info("Pasword for " + userIdentity + " was set successfully");
                 studentDM.getSelectedStudent().setPassword(password);
+                XlsxHandler.INSTANCE.updateStudentInWorkbook(studentDM.getSelectedStudent());
+                
+                SettingsManager.INSTANCE.incrementPasswordResetCount();
             }
         } catch (IOException e) {
-            logger.add(new LogEntry(LogLevel.ERROR, e.getLocalizedMessage()));
+            logger.error(e.getLocalizedMessage());
         }
+        
     }
 
     @FXML
@@ -87,9 +92,9 @@ public class ActionsBarController {
         try {
             passwordField.setText(dinopassAPI.getNewPassword());
         } catch (IOException e) {
-            logger.add(new LogEntry(LogLevel.ERROR, e.getMessage()));
+            logger.error(e.getMessage());
         } catch (InterruptedException e) {
-            logger.add(new LogEntry(LogLevel.ERROR, e.getMessage()));
+            logger.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
     }
@@ -102,7 +107,8 @@ public class ActionsBarController {
     @FXML
     private void onPrintButton() {
         if (studentDM.getSelectedStudent() != null) {
-            PrinterAPI.INSTANCE.print(studentDM.getSelectedStudent());
+            PrinterHandler.INSTANCE.print(studentDM.getSelectedStudent());
+            SettingsManager.INSTANCE.incrementPasswordPrintCount();
         }
     }
 }
