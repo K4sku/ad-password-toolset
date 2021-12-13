@@ -6,6 +6,7 @@ public class SettingsDataModel {
     //settings
     private String domainController;
     private boolean isDomainControllerSet;
+    private String defaultEmailSuffix;
     private Path lastOpenedFile;
     private boolean openLastFileOnStart;
     private boolean autosave;
@@ -21,6 +22,7 @@ public class SettingsDataModel {
     public SettingsDataModel() {
         this.domainController = "";
         this.isDomainControllerSet = false;
+        this.defaultEmailSuffix = "";
         this.lastOpenedFile = null;
         this.openLastFileOnStart = false;
         this.autosave = false;
@@ -33,6 +35,7 @@ public class SettingsDataModel {
     public void setInstance(SettingsDataModel instance) {
         this.domainController = instance.domainController;
         this.isDomainControllerSet = instance.isDomainControllerSet;
+        this.defaultEmailSuffix = instance.defaultEmailSuffix;
         this.lastOpenedFile = instance.lastOpenedFile;
         this.openLastFileOnStart = instance.openLastFileOnStart;
         this.autosave = instance.autosave;
@@ -51,6 +54,14 @@ public class SettingsDataModel {
 
     public boolean isDomainControllerSet() {
         return isDomainControllerSet;
+    }
+
+    public String getDefaultEmailSuffix() {
+        return defaultEmailSuffix;
+    }
+
+    public void setDefaultEmailSuffix(String defaultEmailSuffix) {
+        this.defaultEmailSuffix = defaultEmailSuffix;
     }
     
     public Path getLastOpenedFile() {

@@ -28,7 +28,7 @@ public class MainController {
         this.settingsDM = settingsDM;
         tableViewController.initModel(studentDM);
         actionsBarController.initModel(studentDM, settingsDM);
-        menuBarController.initModel(studentDM);
+        menuBarController.initModel(studentDM, settingsDM);
         filterBarController.initModel(studentDM);
         logController.initDM(logDM);
 

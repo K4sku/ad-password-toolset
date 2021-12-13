@@ -2,14 +2,17 @@ package pl.tbs.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import pl.tbs.model.LogLevel;
+import pl.tbs.model.SettingsDataModel;
+import pl.tbs.model.Student;
 import pl.tbs.model.StudentDataModel;
 
 public class MenuBarController {
@@ -41,6 +44,7 @@ public class MenuBarController {
     private File selectedFile;
     private String initialDirectory = "C:\\";
     private StudentDataModel studentDM;
+    private SettingsDataModel settingsDM;
     private Logger logger = Logger.INSTANCE;
 
     public void initialize() {
@@ -50,13 +54,14 @@ public class MenuBarController {
     }
 
 
-    public void initModel(StudentDataModel studentDM) {
+    public void initModel(StudentDataModel studentDM, SettingsDataModel settingsDM) {
         // ensure model is set once
         if (this.studentDM != null) {
             throw new IllegalStateException("StudentDataModel can only be initialized once");
         }
 
         this.studentDM = studentDM;
+        this.settingsDM = settingsDM;
     }
 
     @FXML
@@ -119,6 +124,23 @@ public class MenuBarController {
     @FXML
     protected void onAddStudentMenuItem() {
         logger.trace("add student button");
+        Dialog<AddStudentDialog.Results> newStudentDialog = AddStudentDialog.instance();
+        Optional<AddStudentDialog.Results> optinalResults = newStudentDialog.showAndWait();
+        if (optinalResults.isPresent()) {
+            AddStudentDialog.Results results = optinalResults.get();
+            Student student = new Student.Builder()
+                    .rowNumber(studentDM.getSelectedSheet().getLastRowNum() + 1)
+                    .year(results.getYear())
+                    .firstName(results.getFirstName())
+                    .lastName(results.getLastName())
+                    .displayName(results.getFirstName()+" "+results.getLastName())
+                    .upn(results.getUpn())
+                    .email(results.getUpn()+settingsDM.getDefaultEmailSuffix())
+                    .password(results.getPassword())
+                    .build();
+            studentDM.getStudentList().add(student);
+            XlsxHandler.INSTANCE.updateStudentInWorkbook(student);
+        }
         
     }
 
@@ -142,7 +164,6 @@ public class MenuBarController {
         saveFileMenuItem.setDisable(!fileOpened);
         closeFileMenuItem.setDisable(!fileOpened);
         exportMenu.setDisable(!fileOpened);
-        toolsMenu.setDisable(fileOpened);
         addStudentMenuItem.setDisable(!fileOpened);
     }
 
