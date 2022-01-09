@@ -45,9 +45,13 @@ public class MenuBarController {
     private String initialDirectory = "C:\\";
     private StudentDataModel studentDM;
     private SettingsDataModel settingsDM;
-    private Logger logger = Logger.INSTANCE;
+    private Logger logger;
+    private XlsxHandler xlsxHandler;
 
     public void initialize() {
+        logger = Logger.INSTANCE;
+        xlsxHandler = XlsxHandler.INSTANCE;
+
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Spreadsheet", "*.xlsx"));
         fileChooser.setInitialDirectory(new File(initialDirectory));
@@ -70,7 +74,7 @@ public class MenuBarController {
         if (selectedFile != null && selectedFile.isFile()) {
             if (selectedFile.canWrite()) {
                 studentDM.setSelectedFile(selectedFile);
-                XlsxHandler.INSTANCE.loadWorkbookFromFile();
+                xlsxHandler.loadWorkbookFromFile();
                 logger.info("Loaded file: " + selectedFile.getName());
                 setFileOpenedButtons(true);
             } else {
@@ -84,7 +88,7 @@ public class MenuBarController {
     @FXML
     protected void onSaveFileMenuItem() {
         if (selectedFile != null) {
-            XlsxHandler.INSTANCE.saveWorkbookToFile();
+            xlsxHandler.saveWorkbookToFile();
             logger.info("Saved file: " + selectedFile.getName());
         } else {
             logger.error("No file selected");
@@ -95,7 +99,7 @@ public class MenuBarController {
     protected void onCloseFileMenuItem() {
         if (studentDM.isWorkbookOpen()) {
             try {
-                XlsxHandler.INSTANCE.closeWorkbook();
+                xlsxHandler.closeWorkbook();
                 setFileOpenedButtons(false);
             } catch (IOException e) {
                 logger.warn("File could not be closed");
@@ -139,7 +143,7 @@ public class MenuBarController {
                     .password(results.getPassword())
                     .build();
             studentDM.getStudentList().add(student);
-            XlsxHandler.INSTANCE.updateStudentInWorkbook(student);
+            xlsxHandler.updateStudentInWorkbook(student);
         }
         
     }

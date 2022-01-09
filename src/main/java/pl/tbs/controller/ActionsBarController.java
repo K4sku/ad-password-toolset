@@ -11,7 +11,10 @@ import pl.tbs.model.SettingsDataModel;
 import pl.tbs.model.StudentDataModel;
 
 public class ActionsBarController {
-    private Logger logger = Logger.INSTANCE;
+    private Logger logger;
+    private XlsxHandler xlsxHandler;
+    private PrinterHandler printerHandler;
+    private SettingsManager settingsManager;
 
     @FXML
     private Button setPasswordButton;
@@ -27,6 +30,10 @@ public class ActionsBarController {
     private SettingsDataModel settingsDM;
 
     public void initialize() {
+        logger = Logger.INSTANCE;
+        xlsxHandler = XlsxHandler.INSTANCE;
+        printerHandler = PrinterHandler.INSTANCE;
+        settingsManager = SettingsManager.INSTANCE;
 
     }
 
@@ -77,9 +84,9 @@ public class ActionsBarController {
             } else {
                 logger.info("Pasword for " + userIdentity + " was set successfully");
                 studentDM.getSelectedStudent().setPassword(password);
-                XlsxHandler.INSTANCE.updateStudentInWorkbook(studentDM.getSelectedStudent());
+                xlsxHandler.updateStudentInWorkbook(studentDM.getSelectedStudent());
                 
-                SettingsManager.INSTANCE.incrementPasswordResetCount();
+                settingsManager.incrementPasswordResetCount();
             }
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage());
@@ -107,8 +114,8 @@ public class ActionsBarController {
     @FXML
     private void onPrintButton() {
         if (studentDM.getSelectedStudent() != null) {
-            PrinterHandler.INSTANCE.print(studentDM.getSelectedStudent());
-            SettingsManager.INSTANCE.incrementPasswordPrintCount();
+            printerHandler.print(studentDM.getSelectedStudent());
+            settingsManager.incrementPasswordPrintCount();
         }
     }
 }

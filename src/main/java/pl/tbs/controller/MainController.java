@@ -10,6 +10,7 @@ import pl.tbs.model.StudentDataModel;
 
 public class MainController {
 
+    private SettingsManager settingsManager;
     @FXML
     private MenuBarController menuBarController;
     @FXML
@@ -22,6 +23,10 @@ public class MainController {
     private LogController logController;
 
     private SettingsDataModel settingsDM;
+
+    public void initialize() {
+        settingsManager = SettingsManager.INSTANCE;
+    }
 
     //initalize data models in controllers, singletons are initialized in App.java
     public void initDM(StudentDataModel studentDM, LogDataModel logDM, SettingsDataModel settingsDM) {
@@ -44,7 +49,7 @@ public class MainController {
 
         if (result.isPresent()) {
             settingsDM.setDomainController(result.get());
-            SettingsManager.INSTANCE.saveSettings();
+            settingsManager.saveSettings();
         }
     }
 
