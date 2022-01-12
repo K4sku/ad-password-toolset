@@ -1,9 +1,13 @@
 package pl.tbs.controller;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
 import pl.tbs.model.LogDataModel;
 import pl.tbs.model.SettingsDataModel;
 import pl.tbs.model.StudentDataModel;
@@ -26,6 +30,11 @@ public class MainController {
 
     public void initialize() {
         settingsManager = SettingsManager.INSTANCE;
+
+        //open settings window if domain is not set
+        if (!settingsDM.isDomainControllerSet()) {
+            menuBarController.onSettingsMenuItem();
+        }
     }
 
     //initalize data models in controllers, singletons are initialized in App.java
@@ -39,18 +48,16 @@ public class MainController {
 
     }
 
-    //open popup window asking for domain controller name
-    public void openDomainDialog() {
-        TextInputDialog dialog = new TextInputDialog("server.domain.com");
-        dialog.setTitle("Domain Controller server");
-        dialog.setHeaderText("Enter domain controller server name");
 
-        Optional<String> result = dialog.showAndWait();
+        // TextInputDialog dialog = new TextInputDialog("server.domain.com");
+        // dialog.setTitle("Domain Controller server");
+        // dialog.setHeaderText("Enter domain controller server name");
 
-        if (result.isPresent()) {
-            settingsDM.setDomainController(result.get());
-            settingsManager.saveSettings();
-        }
+        // Optional<String> result = dialog.showAndWait();
+
+        // if (result.isPresent()) {
+        //     settingsDM.setDomainController(result.get());
+        //     settingsManager.saveSettings();
     }
 
     

@@ -4,12 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.tbs.model.SettingsDataModel;
 import pl.tbs.model.Student;
@@ -128,22 +133,34 @@ public class MenuBarController {
     @FXML
     protected void onAddStudentMenuItem() {
         logger.trace("add student button");
-        Dialog<AddStudentDialog.Results> newStudentDialog = AddStudentDialog.instance();
+        Dialog<AddStudentDialog.Results> newStudentDialog = AddStudentDialog.instance(settingsDM.getDefaultEmailSuffix());
         Optional<AddStudentDialog.Results> optinalResults = newStudentDialog.showAndWait();
         if (optinalResults.isPresent()) {
             AddStudentDialog.Results results = optinalResults.get();
+            // process name to capitalized without whitespaces
+            String firstName = StringUtils.trimToEmpty(results.getFirstName());
+            firstName = StringUtils.capitalize(firstName.toLowerCase());
+            String lastName = StringUtils.trimToEmpty(results.getLastName());
+            lastName = StringUtils.capitalize(lastName.toLowerCase());
+
+            String upn = StringUtils.strip(results.getUpn()).toLowerCase();
+            String email = String.join("@", upn, StringUtils.strip(results.getDomain().toLowerCase()));
+
+            // add student
             Student student = new Student.Builder()
                     .rowNumber(studentDM.getSelectedSheet().getLastRowNum() + 1)
                     .year(results.getYear())
-                    .firstName(results.getFirstName())
-                    .lastName(results.getLastName())
-                    .displayName(results.getFirstName()+" "+results.getLastName())
-                    .upn(results.getUpn())
-                    .email(results.getUpn()+settingsDM.getDefaultEmailSuffix())
-                    .password(results.getPassword())
+                    .form(StringUtils.trimToEmpty(results.getForm()))
+                    .firstName(firstName)
+                    .lastName(lastName)
+                    .displayName(String.join(" ", firstName, lastName))
+                    .upn(upn)
+                    .email(email)
+                    .password(StringUtils.trimToEmpty(results.getPassword()))
                     .build();
             studentDM.getStudentList().add(student);
             xlsxHandler.updateStudentInWorkbook(student);
+            logger.info("Added student: "+ student.toString());
         }
         
     }
@@ -152,6 +169,22 @@ public class MenuBarController {
     @FXML
     protected void onSettingsMenuItem() {
         logger.trace("settings button");
+
+        FXMLLoader settingsFxmlLoader = new FXMLLoader();
+        settingsFxmlLoader.setLocation(getClass().getResource("settingsWindow.fxml"));
+        Scene settingsScene;
+        try {
+            settingsScene = new Scene(settingsFxmlLoader.load());
+            Stage settingsStage = new Stage();
+            settingsStage.setTitle("Settings");
+            settingsStage.setScene(settingsScene);
+            settingsStage.initModality(Modality.WINDOW_MODAL);
+            settingsStage.initOwner(menuBar.getScene().getWindow());
+            settingsStage.show();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
     }
 

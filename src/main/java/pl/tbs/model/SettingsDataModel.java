@@ -20,9 +20,9 @@ public class SettingsDataModel {
     private String password;
 
     public SettingsDataModel() {
-        this.domainController = "";
+        this.domainController = "server.domain.com";
         this.isDomainControllerSet = false;
-        this.defaultEmailSuffix = "";
+        this.defaultEmailSuffix = "domain.com";
         this.lastOpenedFile = null;
         this.openLastFileOnStart = false;
         this.autosave = false;

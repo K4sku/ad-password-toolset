@@ -45,17 +45,15 @@ public class App extends Application {
         //settings initialization
         SettingsManager.INSTANCE.initSettings();
 
-        //open dialog window if domain is not set
-        if (!settingsDM.isDomainControllerSet()) {
-            mainController.openDomainDialog();
-        }
-
+        
         //setup stage
-        stage.setTitle("AD password toolset - TBS Warsaw");
+        stage.setTitle("AD password toolset");
         stage.setScene(scene);
         stage.setMinWidth(600.0);
         stage.setMinHeight(800.0);
         stage.show();
+        
+
     }
 
     public static void main(String[] args) {

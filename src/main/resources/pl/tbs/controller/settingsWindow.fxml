@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.tbs.controller.SettingsWindowController">
+   <children>
+      <VBox spacing="8.0">
+         <children>
+            <HBox alignment="BASELINE_LEFT" prefHeight="30.0" prefWidth="268.0">
+               <children>
+                  <Label minWidth="110.0" text="Domain controller">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="domainTField" promptText="DC.domain.com" />
+               </children>
+            </HBox>
+            <HBox alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="268.0">
+               <children>
+                  <Label minWidth="110.0" text="Default Email Suffix">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="emailTField" promptText="domain.com" />
+               </children>
+            </HBox>
+            <CheckBox fx:id="openOnStartCBox" mnemonicParsing="false" text="Open last file on start" />
+            <CheckBox fx:id="autosaveCBox" layoutX="10.0" layoutY="70.0" mnemonicParsing="false" text="Autosave file on change" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+      <VBox spacing="8.0" style="-fx-border-color: black; -fx-border-width: 1 0 1 0;">
+         <children>
+            <Label alignment="TOP_LEFT" contentDisplay="CENTER" text="By default app uses Windows login credentials to change passwords. " wrapText="true" />
+            <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="15.0" layoutY="16.0" text="Password is NOT saved." wrapText="true" />
+            <CheckBox fx:id="customCredCBox" mnemonicParsing="false" text="Use custom credentials" />
+            <HBox alignment="BASELINE_LEFT" prefHeight="30.0" prefWidth="268.0">
+               <children>
+                  <Label minWidth="55.0" text="Username">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="usernameTField" disable="true" promptText="com\username" />
+               </children>
+            </HBox>
+            <HBox alignment="BASELINE_LEFT" prefHeight="30.0" prefWidth="268.0">
+               <children>
+                  <Label minWidth="55.0" text="Password">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <PasswordField fx:id="pwdTField" disable="true" />
+                  <Button fx:id="validateButton" disable="true" mnemonicParsing="false" text="Validate">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+      <AnchorPane>
+         <children>
+          <Button fx:id="saveButton" disable="true" layoutY="1.0" mnemonicParsing="false" onAction="#onSaveButtonAction" text="Save changes" AnchorPane.leftAnchor="10.0" />
+            <Button fx:id="closeButton" layoutX="283.0" layoutY="2.0" mnemonicParsing="false" onAction="#onCloseButtonAction" text="Close window" AnchorPane.rightAnchor="10.0" />
+            <Button fx:id="closeButtonNoSave" disable="true" layoutX="287.0" layoutY="2.0" mnemonicParsing="false" onAction="#onCloseButtonActionNoSave" text="Close window" visible="false" AnchorPane.rightAnchor="10.0" />
+            <Label fx:id="closeWarningLabel" layoutX="113.0" layoutY="5.0" text="Close without saving changes?" textFill="RED" visible="false" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
+      </AnchorPane>
+   </children>
+</VBox>
